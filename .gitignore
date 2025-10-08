@@ -1,0 +1,181 @@
+### Java ###
+# Compiled class file
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pompom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Gradle ###
+.gradle
+**/build/
+!src/**/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+### IDE ###
+## IntelliJ IDEA ##
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.idea_modules/
+atlassian-ide-plugin.xml
+*.swp
+*.swo
+
+# Sonarlint plugin
+.idea/sonarlint/
+
+## Eclipse ##
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+## NetBeans ##
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+## VS Code ##
+.vscode/
+*.code-workspace
+
+## Sublime Text ##
+*.sublime-*
+
+### OS ###
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+### Database ###
+# H2 Database
+*.mv.db
+*.trace.db
+
+# HSQLDB
+*.data
+*.script
+*.lck
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# MongoDB
+/data/db/
+/data/log/
+/mongod.log
+
+### Logs ###
+logs/
+*.log
+log/
+*.log.*
+!**/src/main/**/log/
+!**/src/test/**/log/
+
+### Environment Variables ###
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+### Application Configs ###
+# Application properties (except the main one)
+application-*.properties
+!application.properties
+application-*.yml
+!application.yml
+
+# Backup configs
+*.properties.bak
+*.yml.bak
+
+### Docker ###
+docker-compose.override.yml
+
+### Frontend (если есть) ###
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+
+### Testing ###
+# Surefire reports
+**/surefire-reports/
+**/failsafe-reports/
+
+# Jacoco
+*.exec
+jacoco.exec
+
+### Temp Files ###
+*.tmp
+*.temp
+*.cache
+
+### System Files ###
+*.orig
+*.bak
+
+### Package Managers ###
+# Maven wrapper (можно включить если используете)
+# !mvnw
+# !mvnw.cmd
+# !.mvn/
+
+# Gradle wrapper (можно включить если используете)
+# !gradlew
+# !gradlew.bat
