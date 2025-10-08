@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/hakaton_db
+    username: pavel
+    password: paveladmin
+    hikari:
+      schema: hakaton_db
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS hakaton_db
+  jpa:
+    generate-ddl: true
+    show-sql: false
