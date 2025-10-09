@@ -27,7 +27,7 @@ public class SupervisorEntity {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @Column(name = "patronymic", nullable = true)
+    @Column(name = "patronymic")
     private String patronymic;
 
     @Column(name = "email", nullable = false)
@@ -36,6 +36,6 @@ public class SupervisorEntity {
     @Column(name = "contact_phone", nullable = false)
     private String contactPhone;
 
-    @Column(name = "url_to_card", nullable = false)
+    @Column(name = "url_to_card")
     private URL urlToCard;
 }

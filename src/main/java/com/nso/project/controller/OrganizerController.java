@@ -17,7 +17,7 @@ public class OrganizerController {
 
     private static final Logger log = LoggerFactory.getLogger(OrganizerController.class);
 
-    private OrganizerService service;
+    private final OrganizerService service;
 
     @GetMapping
     public ResponseEntity<List<Organizer>> findAllOrganizers() {
@@ -50,6 +50,6 @@ public class OrganizerController {
     public ResponseEntity<Organizer> deleteOrganizer(@PathVariable Long id) {
         log.info("[Controller] Delete organizer by id: {}", id);
         service.delete(id);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build();
     }
 }

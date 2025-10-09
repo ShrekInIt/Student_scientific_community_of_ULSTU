@@ -42,7 +42,7 @@ public class MemberService {
         log.info("[Service] Create member: {}", memberToCreate);
 
         var memberToSave = mapper.toEntity(memberToCreate);
-        memberToSave = repository.save(memberToSave);
+        repository.save(memberToSave);
 
         return mapper.toMember(memberToSave);
     }
