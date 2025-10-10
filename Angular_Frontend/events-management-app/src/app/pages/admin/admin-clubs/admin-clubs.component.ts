@@ -23,7 +23,7 @@ export class AdminClubsComponent implements OnInit {
   clubs: Club[] = [];
   filteredClubs: Club[] = [];
   searchTerm: string = '';
-  
+
   showCreateModal = false;
   showDeleteModal = false;
   showSuccessToast = false;
@@ -32,9 +32,9 @@ export class AdminClubsComponent implements OnInit {
   clubForm: FormGroup;
   loading = false;
   error = '';
-  
+
   selectedClubId: number | null = null;
-  
+
   private apiUrl = 'http://localhost:8080/api';
 
   constructor(
@@ -61,13 +61,13 @@ export class AdminClubsComponent implements OnInit {
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Error loading clubs:', error);
-      this.showErrorMessage('Failed to load clubs');
+      this.showErrorMessage('Не удалось загрузить клубы');
     }
   }
 
   filterClubs() {
     const term = this.searchTerm.toLowerCase().trim();
-    
+
     if (!term) {
       this.filteredClubs = [...this.clubs];
       return;
@@ -98,7 +98,7 @@ export class AdminClubsComponent implements OnInit {
 
   async onSubmit() {
     if (this.clubForm.invalid) {
-      this.error = 'Please fill in all required fields correctly.';
+      this.error = 'Пожалуйста, заполните все обязательные поля корректно.';
       return;
     }
 
@@ -113,15 +113,15 @@ export class AdminClubsComponent implements OnInit {
         presidentContact: formValue.presidentContact,
         presidentEmail: formValue.presidentEmail
       };
-      
+
       await this.http.post<Club>(`${this.apiUrl}/clubs`, clubData).toPromise();
-      
+
       this.closeCreateModal();
-      this.showSuccessMessage('Club created successfully!');
+      this.showSuccessMessage('Клуб успешно создан!');
       await this.loadClubs();
     } catch (error: any) {
       console.error('Error creating club:', error);
-      this.error = error?.error?.message || 'Failed to create club. Please try again.';
+      this.error = error?.error?.message || 'Не удалось создать клуб. Пожалуйста, попробуйте ещё раз.';
     } finally {
       this.loading = false;
     }
@@ -139,49 +139,49 @@ export class AdminClubsComponent implements OnInit {
 
   async confirmDelete() {
     if (!this.selectedClubId) return;
-    
+
     this.loading = true;
     this.error = '';
     this.cdr.detectChanges();
-    
+
     try {
       console.log('Deleting club with ID:', this.selectedClubId);
-      
+
       await this.http.delete(`${this.apiUrl}/clubs/${this.selectedClubId}`, { responseType: 'text' }).toPromise();
-      
+
       console.log('Delete successful!');
-      
+
       await this.loadClubs();
-      
+
       await new Promise(resolve => setTimeout(resolve, 3000));
-      
+
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedClubId = null;
       this.cdr.detectChanges();
-      
+
       await new Promise(resolve => setTimeout(resolve, 300));
-      
-      this.toastMessage = 'Club deleted successfully!';
+
+      this.toastMessage = 'Клуб успешно удалён!';
       this.showSuccessToast = true;
       console.log('Toast state:', this.showSuccessToast, 'Message:', this.toastMessage);
       this.cdr.detectChanges();
-      
+
       setTimeout(() => {
         console.log('Hiding toast...');
         this.showSuccessToast = false;
         this.cdr.detectChanges();
       }, 3000);
-      
+
     } catch (error: any) {
       console.error('Error deleting club:', error);
-      
+
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedClubId = null;
       this.cdr.detectChanges();
-      
-      this.showErrorMessage(`Failed to delete club.`);
+
+      this.showErrorMessage('Не удалось удалить клуб.');
     }
   }
 

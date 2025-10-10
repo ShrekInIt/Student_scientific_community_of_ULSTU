@@ -25,7 +25,7 @@ export class AdminAdminsComponent implements OnInit {
   admins: Admin[] = [];
   filteredAdmins: Admin[] = [];
   searchTerm: string = '';
-  
+
   showCreateModal = false;
   showEditModal = false;
   showDeleteModal = false;
@@ -35,10 +35,10 @@ export class AdminAdminsComponent implements OnInit {
   adminForm: FormGroup;
   loading = false;
   error = '';
-  
+
   selectedAdminId: number | null = null;
   currentAdminId: number | null = null; // For self-delete protection
-  
+
   private apiUrl = 'http://localhost:8080/api';
 
   constructor(
@@ -97,13 +97,13 @@ export class AdminAdminsComponent implements OnInit {
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Error loading admins:', error);
-      this.showErrorMessage('Failed to load admins');
+      this.showError('Не удалось загрузить администраторов');
     }
   }
 
   filterAdmins() {
     const term = this.searchTerm.toLowerCase().trim();
-    
+
     if (!term) {
       this.filteredAdmins = [...this.admins];
       return;
@@ -147,7 +147,7 @@ export class AdminAdminsComponent implements OnInit {
 
   async onSubmit() {
     if (this.adminForm.invalid) {
-      this.error = 'Please fill in all required fields correctly.';
+      this.error = 'Пожалуйста, заполните все обязательные поля корректно.';
       return;
     }
 
@@ -161,15 +161,15 @@ export class AdminAdminsComponent implements OnInit {
         password: this.adminForm.value.password, // Will be bcrypt hashed on backend
         role: this.adminForm.value.role
       };
-      
+
       await this.http.post<Admin>(`${this.apiUrl}/admins`, adminData).toPromise();
-      
+
       this.closeCreateModal();
-      this.showSuccessMessage('Admin created successfully! Password has been securely hashed.');
+      this.showSuccess('Администратор успешно создан! Пароль был надежно зашифрован.');
       await this.loadAdmins();
     } catch (error: any) {
       console.error('Error creating admin:', error);
-      this.error = error?.error || 'Failed to create admin. Please try again.';
+      this.error = error?.error || 'Не удалось создать администратора. Пожалуйста, попробуйте снова.';
     } finally {
       this.loading = false;
     }
@@ -179,7 +179,7 @@ export class AdminAdminsComponent implements OnInit {
   openEditModal(admin: Admin) {
     this.selectedAdminId = admin.adminId!;
     this.showEditModal = true;
-    
+
     // Populate form without password
     this.adminForm.patchValue({
       name: admin.name,
@@ -187,11 +187,11 @@ export class AdminAdminsComponent implements OnInit {
       password: '', // Leave password empty
       role: admin.role
     });
-    
+
     // Password is optional for edit
     this.adminForm.get('password')?.clearValidators();
     this.adminForm.get('password')?.updateValueAndValidity();
-    
+
     this.error = '';
   }
 
@@ -204,7 +204,7 @@ export class AdminAdminsComponent implements OnInit {
 
   async onUpdate() {
     if (this.adminForm.invalid) {
-      this.error = 'Please fill in all required fields correctly.';
+      this.error = 'Пожалуйста, заполните все обязательные поля корректно.';
       return;
     }
 
@@ -219,20 +219,20 @@ export class AdminAdminsComponent implements OnInit {
         email: this.adminForm.value.email,
         role: this.adminForm.value.role
       };
-      
+
       // Only include password if it's been changed
       if (this.adminForm.value.password && this.adminForm.value.password.trim() !== '') {
         adminData.password = this.adminForm.value.password; // Will be bcrypt hashed on backend
       }
-      
+
       await this.http.put<Admin>(`${this.apiUrl}/admins/${this.selectedAdminId}`, adminData).toPromise();
-      
+
       this.closeEditModal();
-      this.showSuccessMessage('Admin updated successfully!');
+      this.showSuccess('Данные администратора обновлены!');
       await this.loadAdmins();
     } catch (error: any) {
       console.error('Error updating admin:', error);
-      this.error = error?.error || 'Failed to update admin. Please try again.';
+      this.error = error?.error || 'Не удалось обновить администратора. Пожалуйста, попробуйте снова.';
     } finally {
       this.loading = false;
     }
@@ -251,69 +251,61 @@ export class AdminAdminsComponent implements OnInit {
 
   async confirmDelete() {
     if (!this.selectedAdminId) return;
-    
+
     this.loading = true;
     this.error = '';
     this.cdr.detectChanges();
-    
+
     try {
       console.log('Deleting admin with ID:', this.selectedAdminId);
-      
+
       await this.http.delete(`${this.apiUrl}/admins/${this.selectedAdminId}`, { responseType: 'text' }).toPromise();
-      
+
       console.log('Delete successful!');
-      
+
       await this.loadAdmins();
-      
+
       await new Promise(resolve => setTimeout(resolve, 3000));
-      
+
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedAdminId = null;
       this.cdr.detectChanges();
-      
+
       await new Promise(resolve => setTimeout(resolve, 300));
-      
-      this.toastMessage = 'Admin deleted successfully!';
+
+      this.toastMessage = 'Администратор удалён!';
       this.showSuccessToast = true;
       console.log('Toast state:', this.showSuccessToast, 'Message:', this.toastMessage);
       this.cdr.detectChanges();
-      
+
       setTimeout(() => {
         console.log('Hiding toast...');
         this.showSuccessToast = false;
         this.cdr.detectChanges();
       }, 3000);
-      
+
     } catch (error: any) {
       console.error('Error deleting admin:', error);
-      
+
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedAdminId = null;
       this.cdr.detectChanges();
-      
-      this.showErrorMessage('Failed to delete admin.');
+
+      this.showError('Не удалось удалить администратора.');
     }
   }
 
-  showSuccessMessage(message: string): void {
+  showSuccess(message: string) {
     this.toastMessage = message;
     this.showSuccessToast = true;
-    this.cdr.detectChanges();
-    setTimeout(() => {
-      this.showSuccessToast = false;
-      this.cdr.detectChanges();
-    }, 3000);
+    setTimeout(() => this.showSuccessToast = false, 3000);
   }
 
-  showErrorMessage(message: string): void {
+  showError(message: string) {
     this.toastMessage = message;
     this.showErrorToast = true;
-    this.cdr.detectChanges();
-    setTimeout(() => {
-      this.showErrorToast = false;
-      this.cdr.detectChanges();
-    }, 3000);
+    setTimeout(() => this.showErrorToast = false, 3000);
   }
 }

@@ -1,18 +1,18 @@
 <div class="admin-clubs-module">
   <!-- Module Header -->
   <div class="module-header">
-    <h1>Clubs Module</h1>
+    <h1>Модуль «Клубы»</h1>
   </div>
 
   <!-- Stats Container -->
   <div class="stats-container">
     <div class="stats-content">
       <div class="stat-item">
-        <div class="stat-label">Total Clubs</div>
+        <div class="stat-label">Всего клубов</div>
         <div class="stat-value">{{ clubs.length }}</div>
       </div>
       <div class="stat-item">
-        <div class="stat-label">Active Records</div>
+        <div class="stat-label">Активные записи</div>
         <div class="stat-value">{{ filteredClubs.length }}</div>
       </div>
     </div>
@@ -26,10 +26,10 @@
         <circle cx="11" cy="11" r="8" stroke-width="2"/>
         <path d="m21 21-4.35-4.35" stroke-width="2"/>
       </svg>
-      <input 
-        type="text" 
-        class="search-input" 
-        placeholder="Search by club name or president..."
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Поиск по названию клуба или председателю..."
         [(ngModel)]="searchTerm"
         (input)="filterClubs()"
       />
@@ -48,7 +48,7 @@
         <line x1="12" y1="8" x2="12" y2="16" stroke-width="2"/>
         <line x1="8" y1="12" x2="16" y2="12" stroke-width="2"/>
       </svg>
-      Create Club
+      Добавить клуб
     </button>
   </div>
 
@@ -57,12 +57,12 @@
     <table class="data-table">
       <thead>
         <tr>
-          <th>Sr. No.</th>
-          <th>Club Name</th>
-          <th>President Name</th>
-          <th>President Contact</th>
-          <th>President Email</th>
-          <th>Actions</th>
+          <th>№</th>
+          <th>Название клуба</th>
+          <th>Председатель</th>
+          <th>Контакт председателя</th>
+          <th>Email председателя</th>
+          <th>Действия</th>
         </tr>
       </thead>
       <tbody>
@@ -73,7 +73,7 @@
           <td>{{ club.presidentContact }}</td>
           <td>{{ club.presidentEmail }}</td>
           <td>
-            <button class="delete-btn" (click)="openDeleteModal(club.club_id!)" title="Delete Club">
+            <button class="delete-btn" (click)="openDeleteModal(club.club_id!)" title="Удалить клуб">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <polyline points="3 6 5 6 21 6" stroke-width="2"/>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2"/>
@@ -90,7 +90,7 @@
               <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/>
               <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/>
             </svg>
-            <p>{{ searchTerm ? 'No clubs found matching your search' : 'No clubs available' }}</p>
+            <p>{{ searchTerm ? 'Клубы, соответствующие запросу, не найдены' : 'Клубы отсутствуют' }}</p>
           </td>
         </tr>
       </tbody>
@@ -101,7 +101,7 @@
   <div class="modal-overlay" *ngIf="showCreateModal" (click)="closeCreateModal()">
     <div class="modal-container" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h2>Create New Club</h2>
+        <h2>Создать новый клуб</h2>
         <button class="close-btn" (click)="closeCreateModal()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/>
@@ -114,57 +114,57 @@
         <div class="form-grid">
           <!-- Club Name -->
           <div class="form-group full-width">
-            <label for="name">Club Name *</label>
-            <input 
-              type="text" 
-              id="name" 
+            <label for="name">Название клуба *</label>
+            <input
+              type="text"
+              id="name"
               formControlName="name"
-              placeholder="Enter club name"
+              placeholder="Введите название клуба"
             />
             <span class="error-text" *ngIf="clubForm.get('name')?.invalid && clubForm.get('name')?.touched">
-              Club name is required (min 3 characters)
+              Название клуба обязательно (мин. 3 символа)
             </span>
           </div>
 
           <!-- President Name -->
           <div class="form-group full-width">
-            <label for="presidentName">President Name *</label>
-            <input 
-              type="text" 
-              id="presidentName" 
+            <label for="presidentName">ФИО председателя *</label>
+            <input
+              type="text"
+              id="presidentName"
               formControlName="presidentName"
-              placeholder="Enter president name"
+              placeholder="Введите ФИО председателя"
             />
             <span class="error-text" *ngIf="clubForm.get('presidentName')?.invalid && clubForm.get('presidentName')?.touched">
-              President name is required (min 3 characters)
+              ФИО председателя обязательно (мин. 3 символа)
             </span>
           </div>
 
           <!-- President Contact -->
           <div class="form-group">
-            <label for="presidentContact">President Contact *</label>
-            <input 
-              type="tel" 
-              id="presidentContact" 
+            <label for="presidentContact">Контакт председателя *</label>
+            <input
+              type="tel"
+              id="presidentContact"
               formControlName="presidentContact"
-              placeholder="Enter 10-digit contact number"
+              placeholder="Введите 10-значный номер телефона"
             />
             <span class="error-text" *ngIf="clubForm.get('presidentContact')?.invalid && clubForm.get('presidentContact')?.touched">
-              Valid 10-digit contact number required
+              Требуется корректный 10-значный номер
             </span>
           </div>
 
           <!-- President Email -->
           <div class="form-group">
-            <label for="presidentEmail">President Email *</label>
-            <input 
-              type="email" 
-              id="presidentEmail" 
+            <label for="presidentEmail">Email председателя *</label>
+            <input
+              type="email"
+              id="presidentEmail"
               formControlName="presidentEmail"
-              placeholder="Enter email address"
+              placeholder="Введите адрес электронной почты"
             />
             <span class="error-text" *ngIf="clubForm.get('presidentEmail')?.invalid && clubForm.get('presidentEmail')?.touched">
-              Valid email address required
+              Требуется корректный email
             </span>
           </div>
         </div>
@@ -180,11 +180,11 @@
 
         <div class="modal-actions">
           <button type="button" class="btn-cancel" (click)="closeCreateModal()" [disabled]="loading">
-            Cancel
+            Отмена
           </button>
           <button type="submit" class="btn-submit" [disabled]="loading || clubForm.invalid">
-            <span *ngIf="!loading">Create Club</span>
-            <span *ngIf="loading">Creating...</span>
+            <span *ngIf="!loading">Создать клуб</span>
+            <span *ngIf="loading">Создание...</span>
           </button>
         </div>
       </form>
@@ -195,7 +195,7 @@
   <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
     <div class="modal-container delete-modal" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h2>Confirm Deletion</h2>
+        <h2>Подтверждение удаления</h2>
         <button class="close-btn" (click)="closeDeleteModal()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/>
@@ -212,17 +212,17 @@
             <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2"/>
           </svg>
         </div>
-        <p class="delete-message">Are you sure you want to delete this club?</p>
-        <p class="delete-warning">This will also delete all related events, volunteers, sponsors, and budgets. This action cannot be undone.</p>
+        <p class="delete-message">Вы уверены, что хотите удалить этот клуб?</p>
+        <p class="delete-warning">Это также удалит связанные мероприятия, волонтёров, спонсоров и бюджеты. Действие необратимо.</p>
       </div>
 
       <div class="modal-actions">
         <button type="button" class="btn-cancel" (click)="closeDeleteModal()" [disabled]="loading">
-          No, Cancel
+          Нет, отменить
         </button>
         <button type="button" class="btn-delete" (click)="confirmDelete()" [disabled]="loading">
-          <span *ngIf="!loading">Yes, Delete</span>
-          <span *ngIf="loading">Deleting...</span>
+          <span *ngIf="!loading">Да, удалить</span>
+          <span *ngIf="loading">Удаление...</span>
         </button>
       </div>
     </div>

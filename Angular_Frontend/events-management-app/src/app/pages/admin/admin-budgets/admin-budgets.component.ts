@@ -45,7 +45,7 @@ export class AdminBudgetsComponent implements OnInit {
   events: Event[] = [];
   filteredBudgets: Budget[] = [];
   searchTerm: string = '';
-  
+
   showCreateModal = false;
   showDeleteModal = false;
   showSuccessToast = false;
@@ -54,9 +54,9 @@ export class AdminBudgetsComponent implements OnInit {
   budgetForm: FormGroup;
   loading = false;
   error = '';
-  
+
   selectedBudgetId: number | null = null;
-  
+
   private apiUrl = 'http://localhost:8080/api';
 
   constructor(
@@ -77,32 +77,37 @@ export class AdminBudgetsComponent implements OnInit {
   budgetValidator(group: FormGroup) {
     const allocated = group.get('allocatedAmount')?.value;
     const utilized = group.get('utilizedAmount')?.value;
-    
+
     if (allocated && utilized && parseFloat(utilized) > parseFloat(allocated)) {
       return { budgetExceeded: true };
     }
     return null;
   }
 
-  ngOnInit() {
-    this.loadBudgets();
-    this.loadSponsors();
-    this.loadClubs();
-    this.loadEvents();
+  showError(message: string) {
+    console.error(message);
+    // Здесь можно добавить логику отображения ошибки в UI
   }
 
-  loadBudgets() {
-    this.http.get<Budget[]>(`${this.apiUrl}/budgets`).subscribe({
-      next: (data) => {
-        this.budgets = data;
-        this.filteredBudgets = data;
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error loading budgets:', error);
-        this.error = 'Failed to load budgets';
-      }
-    });
+  async loadClubs() {
+    try {
+      this.clubs = await this.http.get<Club[]>(`${this.apiUrl}/clubs`).toPromise() || [];
+    } catch (error) {
+      this.showError('Не удалось загрузить клубы.');
+    }
+  }
+
+  async loadBudgets() {
+    try {
+      this.budgets = await this.http.get<Budget[]>(`${this.apiUrl}/budgets`).toPromise() || [];
+    } catch (error) {
+      this.showError('Не удалось загрузить бюджеты.');
+    }
+  }
+
+  ngOnInit() {
+    this.loadClubs();
+    this.loadBudgets();
   }
 
   loadSponsors() {
@@ -112,16 +117,6 @@ export class AdminBudgetsComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => console.error('Error loading sponsors:', error)
-    });
-  }
-
-  loadClubs() {
-    this.http.get<Club[]>(`${this.apiUrl}/clubs`).subscribe({
-      next: (data) => {
-        this.clubs = data;
-        this.cdr.detectChanges();
-      },
-      error: (error) => console.error('Error loading clubs:', error)
     });
   }
 
@@ -168,7 +163,7 @@ export class AdminBudgetsComponent implements OnInit {
   onSubmit() {
     if (this.budgetForm.valid) {
       this.loading = true;
-      
+
       const budgetData = {
         allocatedAmount: this.budgetForm.value.allocatedAmount,
         utilizedAmount: this.budgetForm.value.utilizedAmount,
@@ -183,13 +178,13 @@ export class AdminBudgetsComponent implements OnInit {
             this.loading = false;
             this.closeCreateModal();
             this.loadBudgets();
-            this.showToast('Budget created successfully!', 'success');
+            this.showToast('Бюджет успешно создан!', 'success');
           }, 2000);
         },
         error: (error) => {
           console.error('Error creating budget:', error);
           this.loading = false;
-          this.showToast('Error creating budget', 'error');
+          this.showToast('Ошибка при создании бюджета', 'error');
         }
       });
     }
@@ -207,50 +202,50 @@ export class AdminBudgetsComponent implements OnInit {
 
   async confirmDelete() {
     if (!this.selectedBudgetId) return;
-    
+
     this.loading = true;
     this.error = '';
     this.cdr.detectChanges(); // Force update to show "Deleting..."
-    
+
     try {
       console.log('Deleting budget with ID:', this.selectedBudgetId);
-      
+
       await this.http.delete(`${this.apiUrl}/budgets/${this.selectedBudgetId}`, { responseType: 'text' }).toPromise();
-      
+
       console.log('Delete successful!');
-      
+
       // Reload budgets immediately
       this.loadBudgets();
-      
+
       // Wait 3 seconds while showing "Deleting..." message
       await new Promise(resolve => setTimeout(resolve, 3000));
-      
+
       // Now close the modal
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedBudgetId = null;
       this.cdr.detectChanges(); // Force modal to close
-      
+
       // Wait for modal animation to complete
       await new Promise(resolve => setTimeout(resolve, 300));
-      
+
       // Show success toast for 3 seconds
       console.log('About to show toast...');
-      this.toastMessage = 'Budget deleted successfully!';
+      this.toastMessage = 'Бюджет успешно удален!';
       this.showSuccessToast = true;
       console.log('Toast state:', this.showSuccessToast, 'Message:', this.toastMessage);
       this.cdr.detectChanges();
-      
+
       // Hide toast after 3 seconds
       setTimeout(() => {
         this.showSuccessToast = false;
         this.cdr.detectChanges();
       }, 3000);
-      
+
     } catch (error) {
       console.error('Error deleting budget:', error);
       this.loading = false;
-      this.error = 'Failed to delete budget. Please try again.';
+      this.error = 'Не удалось удалить бюджет. Пожалуйста, попробуйте снова.';
       this.cdr.detectChanges();
     }
   }
