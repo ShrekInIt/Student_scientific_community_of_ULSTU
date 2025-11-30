@@ -32,7 +32,7 @@ export class AdminLoginComponent implements OnInit {
     // If already logged in, redirect to appropriate dashboard
     if (this.authService.isLoggedIn()) {
       const user = this.authService.getCurrentUser();
-      if (user?.role === 'ADMIN') {
+      if (user && user.role === 'ADMIN') {
         this.router.navigate(['/admin/dashboard']);
       } else {
         this.router.navigate(['/']);
@@ -49,36 +49,32 @@ export class AdminLoginComponent implements OnInit {
     return null;
   }
 
-  onAdminLogin(): void {
-    if (this.adminForm.valid) {
-      this.adminLoading = true;
-      this.adminError = '';
-
-      const loginData: LoginRequest = this.adminForm.value;
-
-      this.authService.login(loginData).subscribe({
-        next: (response) => {
-          console.log('Admin login successful:', response);
-          this.adminLoading = false;
-          
-          // Verify the user is actually an admin
-          const user = this.authService.getCurrentUser();
-          if (user?.role === 'ADMIN') {
-            this.router.navigate(['/admin/dashboard']);
-          } else {
-            this.adminError = 'Access denied. Admin credentials required.';
-            this.authService.logout(); // Log out non-admin user
-          }
-        },
-        error: (error) => {
-          console.error('Admin login failed:', error);
-          this.adminError = error.error?.message || 'Invalid admin credentials. Please try again.';
-          this.adminLoading = false;
-        }
-      });
-    } else {
-      this.markFormGroupTouched();
+  onAdminLogin() {
+    this.adminError = '';
+    if (this.adminForm.invalid) {
+      this.adminError = 'Пожалуйста, заполните все поля корректно.';
+      return;
     }
+    this.adminLoading = true;
+    const loginRequest: LoginRequest = {
+      email: this.adminForm.value.email,
+      password: this.adminForm.value.password
+    };
+    this.authService.login(loginRequest).subscribe({
+      next: (response) => {
+        const user = response.user;
+        if (user && user.role === 'ADMIN') {
+          this.router.navigate(['/admin/dashboard']);
+        } else {
+          this.adminError = 'Нет прав администратора.';
+        }
+        this.adminLoading = false;
+      },
+      error: (err) => {
+        this.adminError = 'Ошибка входа. Проверьте email и пароль.';
+        this.adminLoading = false;
+      }
+    });
   }
 
   contactSupport(): void {

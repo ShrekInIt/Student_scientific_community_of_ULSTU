@@ -32,11 +32,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   completedEventsCount = 0;
   isRefreshingEvents = false;
   private componentDestroyed = false;
-  
+
   // Background image path
   backgroundImageUrl = 'assets/images/bg-image.png';
   isDarkMode = false;
-  
+
   // Getter for background style - pure image without gradient overlay
   get heroBackgroundStyle(): string {
     return `url(${this.backgroundImageUrl})`;
@@ -51,56 +51,45 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   showCharacterGlow = false;
   hideInteractionHint = false;
   showSpeechBubble = false;
-  
+
   // Feedback overlay properties
   showFeedbackOverlay = false;
   feedbackOverlayTimeout: any;
   speechBubbleText = '';
-  
+
   // Comment modal properties
   showCommentModal = false;
-  
+
   // Cursor trail and particles
   cursorTrail: Array<{id: number, x: number, y: number, emoji: string}> = [];
   particles: Array<{id: number, x: number, y: number, emoji: string, delay?: number}> = [];
-  
-  // Speech bubble messages
+
+  // Приветственные сообщения для персонажа (русский, СНС УлГТУ)
   speechMessages = [
-    "Welcome to FestFlex! 🎉",
-    "Ready to explore amazing events? ✨",
-    "Click me for a surprise! 🎊", 
-    "Let's find your perfect event! �",
-    "Join the celebration! �"
+    "Добро пожаловать в СНС УлГТУ! 🎓",
+    "Готовы к новым открытиям и науке? 🔬",
+    "Кликните на меня — будет сюрприз! ✨",
+    "Присоединяйтесь к нашим мероприятиям! 🗓️",
+    "Вместе мы создаём будущее науки! 🚀"
   ];
-  
+
   // Emoji arrays for effects
   cursorEmojis = ['✨', '⭐', '🌟', '💫', '🎯'];
   celebrationEmojis = ['🎉', '🎊', '🎈', '🎁', '🎀', '🎪', '🎭', '🎨'];
 
   // Event images array - 22 unique professional images
   eventImages = [
-    'assets/images/Event-Images/istockphoto-1166978137-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1175031702-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1300014142-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1349104991-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1371940128-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1443245439-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1450957578-640x640.avif',
-    'assets/images/Event-Images/istockphoto-1453378098-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1455935808-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1483272796-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1488588152-640x640.avif',
-    'assets/images/Event-Images/istockphoto-171592241-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1979771761-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-2189800011-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-2189800037-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-2226813113-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-469711926-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-499517325-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-532256991-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-597958786-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-628483496-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-944251112-612x612.jpg'
+    'assets/images/Image-Gallery/gallery-image-1.jpg',
+    'assets/images/Image-Gallery/gallery-image-2.jpg',
+    'assets/images/Image-Gallery/gallery-image-3.jpg',
+    'assets/images/Image-Gallery/gallery-image-4.jpg',
+    'assets/images/Image-Gallery/gallery-image-5.jpg',
+    'assets/images/Image-Gallery/gallery-image-6.jpg',
+    'assets/images/Image-Gallery/gallery-image-7.jpg',
+    'assets/images/Image-Gallery/gallery-image-8.jpg',
+    'assets/images/Image-Gallery/gallery-image-9.jpg',
+    'assets/images/Image-Gallery/gallery-image-10.jpg',
+    'assets/images/Image-Gallery/gallery-image-11.jpg',
   ];
 
   // Timer properties
@@ -224,7 +213,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
         const wasLoggedOut = !this.isLoggedIn;
         this.isLoggedIn = isLoggedIn;
-        
+
         // Show feedback overlay after successful login (with delay)
         if (isLoggedIn && wasLoggedOut) {
           this.showFeedbackOverlayAfterLogin();
@@ -249,7 +238,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         if (user && user.email) {
           // Check if user has already submitted feedback
           const hasSubmittedFeedback = this.feedbackService.hasFeedbackBeenSubmitted(user.email);
-          
+
           if (!hasSubmittedFeedback) {
             // Delay showing the overlay to let the page load fully
             this.feedbackOverlayTimeout = setTimeout(() => {
@@ -273,10 +262,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private checkForAuthRedirect(): void {
     this.route.queryParams.subscribe(params => {
       if (params['showLogin'] === 'true' && params['feature'] && isPlatformBrowser(this.platformId)) {
-        const featureName = params['feature'] === 'calendar' ? 'Calendar' : 'Results';
+        const featureName = params['feature'] === 'calendar' ? 'Календарь' : 'Результаты';
         // Delay to ensure the component is fully loaded
         setTimeout(() => {
-          this.showLoginRequiredPopup(`access the ${featureName.toLowerCase()}`);
+          this.showLoginRequiredPopup(`доступ к ${featureName.toLowerCase()}`);
         }, 500);
       }
     });
@@ -309,7 +298,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     const eventDate = new Date(dateString);
     const now = new Date();
     const difference = eventDate.getTime() - now.getTime();
-    
+
     // Handle invalid date parsing
     if (isNaN(eventDate.getTime())) {
       console.error('Invalid date parsing:', dateString);
@@ -328,10 +317,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       // Current event has started, find the next event
       if (!this.isRefreshingEvents && !this.componentDestroyed) {
         this.timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-        
+
         // Prevent multiple refresh calls
         this.isRefreshingEvents = true;
-        
+
         // Refresh both upcoming events and next event
         setTimeout(() => {
           if (!this.componentDestroyed) {
@@ -348,9 +337,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log('⚠️ Component destroyed, skipping events refresh');
       return;
     }
-    
+
     console.log('🔄 Refreshing events data...');
-    
+
     // Reload upcoming events with updated filter
     this.subscriptions.add(
       this.eventService.getUpcomingEvents().subscribe({
@@ -403,12 +392,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       // Initialize particles
       this.initializeParticles();
-      
+
       // Load Tenor embed script
       this.loadTenorScript();
-      
+
       console.log('Interactive character initialized successfully');
-      
+
     } catch (error) {
       console.log('Character animation initialization failed:', error);
     }
@@ -421,15 +410,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       const rect = this.characterPlayground.nativeElement.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
-      
+
       const mouseX = event.clientX;
       const mouseY = event.clientY;
-      
+
       const deltaX = (mouseX - centerX) / 10;
       const deltaY = (mouseY - centerY) / 10;
-      
+
       this.characterTransform = `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px))`;
-      
+
       // Add cursor trail effect
       this.addCursorTrail(mouseX - rect.left, mouseY - rect.top);
     }
@@ -452,14 +441,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onCharacterClick(): void {
-    // Trigger celebration animation
+    // Запуск анимации праздника
     this.triggerCelebration();
-    
-    // Change speech bubble
-    this.speechBubbleText = "🎉 Thanks for clicking! Let's explore events together!";
+    // Русское сообщение для СНС УлГТУ
+    this.speechBubbleText = "🎉 Спасибо за интерес! Откройте для себя мероприятия СНС УлГТУ!";
     this.showSpeechBubble = true;
-    
-    // Hide speech bubble after 3 seconds
     setTimeout(() => {
       this.showSpeechBubble = false;
     }, 3000);
@@ -472,14 +458,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       y: y,
       emoji: this.cursorEmojis[Math.floor(Math.random() * this.cursorEmojis.length)]
     };
-    
+
     this.cursorTrail.push(trail);
-    
+
     // Remove trail after animation
     setTimeout(() => {
       this.cursorTrail = this.cursorTrail.filter(t => t.id !== trail.id);
     }, 1000);
-    
+
     // Limit trail length
     if (this.cursorTrail.length > 15) {
       this.cursorTrail.shift();
@@ -496,9 +482,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           y: Math.random() * 400,
           emoji: this.celebrationEmojis[Math.floor(Math.random() * this.celebrationEmojis.length)]
         };
-        
+
         this.particles.push(particle);
-        
+
         // Remove particle after animation
         setTimeout(() => {
           this.particles = this.particles.filter(p => p.id !== particle.id);
@@ -510,7 +496,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private showSpeech(message: string): void {
     this.speechBubbleText = message;
     this.showSpeechBubble = true;
-    
+
     // Auto-hide after 3 seconds
     setTimeout(() => {
       this.showSpeechBubble = false;
@@ -519,7 +505,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private initializeParticles(): void {
     const particleEmojis = ['✨', '🎉', '💫', '⭐', '🌟', '💝', '🎊'];
-    
+
     for (let i = 0; i < 8; i++) {
       this.particles.push({
         id: Date.now() + i,
@@ -535,12 +521,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     const burstEmojis = ['🎉', '🎊', '✨', '💫', '🌟'];
     const centerX = 200;
     const centerY = 200;
-    
+
     // Add burst particles
     for (let i = 0; i < 6; i++) {
       const angle = (i / 6) * Math.PI * 2;
       const distance = 50 + Math.random() * 50;
-      
+
       this.particles.push({
         id: Date.now() + i,
         x: centerX + Math.cos(angle) * distance,
@@ -549,7 +535,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         delay: 0
       });
     }
-    
+
     // Remove burst particles after animation
     setTimeout(() => {
       this.particles = this.particles.slice(0, 8); // Keep only original particles
@@ -589,7 +575,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.router.navigate(['/event-registration', event.event_id]);
     } else {
       // Show popup for login requirement
-      this.showLoginRequiredPopup('register for this event');
+      this.showLoginRequiredPopup('зарегистрироваться на это мероприятие');
     }
   }
 
@@ -598,7 +584,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showCommentModal = true;
     } else {
       // Show popup for login requirement
-      this.showLoginRequiredPopup('comment on this post');
+      this.showLoginRequiredPopup('оставить комментарий к этому посту');
     }
   }
 
@@ -606,7 +592,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   scrollToEvents(): void {
     const eventsSection = document.getElementById('events-section');
     if (eventsSection) {
-      eventsSection.scrollIntoView({ 
+      eventsSection.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
@@ -631,7 +617,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-    
+
     const popup = document.createElement('div');
     popup.innerHTML = `
       <div style="
@@ -700,8 +686,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             </svg>
           </div>
           <h3 style="
-            color: var(--text-primary, #1e293b); 
-            margin-bottom: 1rem; 
+            color: var(--text-primary, #1e293b);
+            margin-bottom: 1rem;
             font-size: 1.8rem;
             font-weight: 700;
             background: linear-gradient(135deg, #3A72EC, #5B8CEF);
@@ -710,16 +696,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             background-clip: text;
             position: relative;
             z-index: 1;
-          ">Login Required</h3>
+          ">Требуется вход</h3>
           <p style="
-            color: var(--text-secondary, #64748b); 
-            margin-bottom: 2rem; 
+            color: var(--text-secondary, #64748b);
+            margin-bottom: 2rem;
             line-height: 1.6;
             font-size: 1.1rem;
             position: relative;
             z-index: 1;
           ">
-            You need to login to ${action}. Please sign in to continue and access this feature.
+            Необходимо войти в систему, чтобы ${action}. Пожалуйста, выполните вход, чтобы продолжить и получить доступ к этой функции.
           </p>
           <div style="display: flex; gap: 1rem; justify-content: center; position: relative; z-index: 1;">
             <button id="loginBtn" style="
@@ -735,7 +721,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
               box-shadow: 0 4px 15px rgba(58, 114, 236, 0.3);
               position: relative;
               overflow: hidden;
-            ">Sign In</button>
+            ">Войти</button>
             <button id="closeBtn" style="
               background: var(--glass-bg, rgba(255, 255, 255, 0.1));
               color: var(--text-secondary, #64748b);
@@ -747,7 +733,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
               font-size: 1rem;
               transition: all 0.3s ease;
               backdrop-filter: blur(15px);
-            ">Cancel</button>
+            ">Отмена</button>
           </div>
         </div>
       </div>
@@ -757,11 +743,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           to { opacity: 1; }
         }
         @keyframes slideIn {
-          from { 
+          from {
             opacity: 0;
             transform: translateY(-20px) scale(0.95);
           }
-          to { 
+          to {
             opacity: 1;
             transform: translateY(0) scale(1);
           }
@@ -777,19 +763,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       </style>
     `;
-    
+
     document.body.appendChild(popup);
-    
+
     // Add click handlers
     popup.querySelector('#loginBtn')?.addEventListener('click', () => {
       document.body.removeChild(popup);
       this.router.navigate(['/auth/signin']);
     });
-    
+
     popup.querySelector('#closeBtn')?.addEventListener('click', () => {
       document.body.removeChild(popup);
     });
-    
+
     // Close on backdrop click
     popup.addEventListener('click', (e) => {
       if (e.target === popup) {
@@ -868,8 +854,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             </svg>
           </div>
           <h3 style="
-            color: var(--text-primary, #1e293b); 
-            margin-bottom: 1rem; 
+            color: var(--text-primary, #1e293b);
+            margin-bottom: 1rem;
             font-size: 1.8rem;
             font-weight: 700;
             background: linear-gradient(135deg, #3A72EC, #5B8CEF);
@@ -878,16 +864,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             background-clip: text;
             position: relative;
             z-index: 1;
-          ">Event Calendar</h3>
+          ">Календарь событий</h3>
           <p style="
-            color: var(--text-secondary, #64748b); 
-            margin-bottom: 2rem; 
+            color: var(--text-secondary, #64748b);
+            margin-bottom: 2rem;
             line-height: 1.6;
             font-size: 1.1rem;
             position: relative;
             z-index: 1;
           ">
-            View all upcoming events in our interactive calendar. Stay updated with the latest event schedules and never miss an important date!
+            Просмотрите все предстоящие события в нашем интерактивном календаре. Будьте в курсе последних расписаний событий и не пропустите важные даты!
           </p>
           <div style="display: flex; gap: 1rem; justify-content: center; position: relative; z-index: 1;">
             <button id="openCalendarBtn" style="
@@ -903,7 +889,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
               box-shadow: 0 4px 15px rgba(58, 114, 236, 0.3);
               position: relative;
               overflow: hidden;
-            ">Open Calendar</button>
+            ">Открыть календарь</button>
             <button id="closeCalendarBtn" style="
               background: var(--glass-bg, rgba(255, 255, 255, 0.1));
               color: var(--text-secondary, #64748b);
@@ -915,7 +901,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
               font-size: 1rem;
               transition: all 0.3s ease;
               backdrop-filter: blur(15px);
-            ">Close</button>
+            ">Закрыть</button>
           </div>
         </div>
       </div>
@@ -925,11 +911,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           to { opacity: 1; }
         }
         @keyframes slideIn {
-          from { 
+          from {
             opacity: 0;
             transform: translateY(-20px) scale(0.95);
           }
-          to { 
+          to {
             opacity: 1;
             transform: translateY(0) scale(1);
           }
@@ -945,20 +931,20 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       </style>
     `;
-    
+
     document.body.appendChild(popup);
-    
+
     // Add click handlers
     popup.querySelector('#openCalendarBtn')?.addEventListener('click', () => {
       document.body.removeChild(popup);
       // TODO: Navigate to calendar page
       console.log('Opening calendar page');
     });
-    
+
     popup.querySelector('#closeCalendarBtn')?.addEventListener('click', () => {
       document.body.removeChild(popup);
     });
-    
+
     // Close on backdrop click
     popup.addEventListener('click', (e) => {
       if (e.target === popup) {
@@ -981,7 +967,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       })
     );
   }
-  
+
   // Mock data methods for fallback when backend is unavailable
   private loadMockEvents(): void {
     const mockEvents = [
@@ -1019,7 +1005,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         club: { club_id: 3, name: 'Sports Club', presidentName: 'Mike Johnson', presidentContact: '1122334455', presidentEmail: 'mike@sportsclub.com' }
       }
     ];
-    
+
     // Filter out past events from mock data
     this.upcomingEvents = this.filterUpcomingEvents(mockEvents);
     this.calculateEventPagination();
@@ -1047,7 +1033,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Helper method to get user initials from full name (for comment avatars)
   getCommentUserInitials(userName: string): string {
     if (!userName) return 'U';
-    
+
     const name = userName.trim();
     if (name.includes(' ')) {
       // If name has space, use first letter of each word
@@ -1056,13 +1042,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         return `${parts[0].charAt(0).toUpperCase()}${parts[1].charAt(0).toUpperCase()}`;
       }
     }
-    
+
     // Fallback - use first two letters or just first if too short
-    return name.length > 1 ? 
-      `${name.charAt(0).toUpperCase()}${name.charAt(1).toUpperCase()}` : 
+    return name.length > 1 ?
+      `${name.charAt(0).toUpperCase()}${name.charAt(1).toUpperCase()}` :
       name.charAt(0).toUpperCase();
   }
-  
+
   // Test backend connectivity
   private testBackendConnection(): void {
     // Only run in browser
@@ -1082,10 +1068,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   // Get unique image for each event based on event ID
-  getEventImage(eventId: number): string {
-    // Use event ID to ensure consistent image assignment
-    const imageIndex = (eventId - 1) % this.eventImages.length;
-    return this.eventImages[imageIndex];
+  getEventImage(event: Event): string {
+    return event.eventPhotoUrl ? event.eventPhotoUrl : '/assets/images/default-event.svg';
   }
 
   // Get date number for the date badge
@@ -1097,19 +1081,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Get month abbreviation for the date badge
   getDateMonth(dateStr: string): string {
     const date = new Date(dateStr);
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 
-                   'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const months = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН',
+                   'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
     return months[date.getMonth()];
   }
 
-  // Format event date for display
-  formatEventDate(dateStr: string): string {
-    const date = new Date(dateStr);
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June',
-                   'July', 'August', 'September', 'October', 'November', 'December'];
-    
-    return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  // Форматирование дат событий на русском языке
+  formatEventDate(dateString: string): string {
+    const date = new Date(dateString);
+    return isNaN(date.getTime()) ? '' : date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
   }
 
   // Get attendee avatars (mock data for now)
@@ -1130,7 +1110,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.router.navigate(['/event-registration', event.event_id]);
     } else {
       // Show popup for login requirement
-      this.showLoginRequiredPopup('view details for this event');
+      this.showLoginRequiredPopup('просмотреть детали этого события');
     }
   }
 
@@ -1151,25 +1131,25 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Filter out events that have already started from the display
   private filterUpcomingEvents(events: any[]): any[] {
     const now = new Date();
-    
+
     return events.filter(event => {
       // Handle both possible date field names
       const eventStartDateStr = event.date || event.event_start_date;
       const eventTimeStr = event.event_time || '00:00';
-      
+
       if (!eventStartDateStr) return true; // Include events without dates to be safe
-      
+
       try {
         // Create the exact start datetime of the event
         const eventStartDateTime = new Date(eventStartDateStr + ' ' + eventTimeStr);
-        
+
         // Event is upcoming if its start time is in the future
         const isUpcoming = eventStartDateTime > now;
-        
+
         if (!isUpcoming) {
           console.log(`🚫 Event "${event.event_name}" has started at ${eventStartDateTime.toLocaleString()}, removing from display`);
         }
-        
+
         return isUpcoming;
       } catch (error) {
         console.warn('Error parsing event date/time:', error, event);
@@ -1178,13 +1158,31 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  formatCommentDate(dateValue: string | Date): string {
+    if (!dateValue) return '';
+
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) return '';
+
+    // Русский формат: "15 января 2024, 14:30"
+    return date.toLocaleDateString('ru-RU', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false // 24-часовой формат
+    });
+  }
+
   // Get display images for events conducted card
   getEventsDisplayImages(): string[] {
     const selectedImages = [
-      'assets/images/Event-Images/istockphoto-1166978137-612x612.jpg',
-      'assets/images/Event-Images/istockphoto-1349104991-612x612.jpg',
-      'assets/images/Event-Images/istockphoto-1371940128-612x612.jpg',
-      'assets/images/Event-Images/istockphoto-2189800011-612x612.jpg'
+      'assets/images/Image-Gallery/gallery-image-5.jpg',
+      'assets/images/Image-Gallery/gallery-image-7.jpg',
+      'assets/images/Image-Gallery/gallery-image-8.jpg',
+      'assets/images/Image-Gallery/gallery-image-9.jpg'
     ];
     return selectedImages;
   }
@@ -1200,24 +1198,24 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.eventService.getAllEvents().subscribe({
       next: (allEvents: Event[]) => {
         console.log('🔍 All events from database:', allEvents);
-        
+
         // Count completed events (where end date is before today)
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        
+
         const completedCount = allEvents.filter(event => {
           if (!event.event_end_date) return false;
           const eventEndDate = new Date(event.event_end_date);
           eventEndDate.setHours(0, 0, 0, 0);
           return eventEndDate < today;
         }).length;
-        
+
         this.completedEventsCount = completedCount;
         console.log(`✅ Calculated completed events count: ${completedCount} out of ${allEvents.length} total events`);
-        
+
         // Force change detection
         this.cdr.detectChanges();
-        
+
         // Fallback to dedicated endpoint if available
         this.eventService.getCompletedEventsCount().subscribe({
           next: (count: number) => {

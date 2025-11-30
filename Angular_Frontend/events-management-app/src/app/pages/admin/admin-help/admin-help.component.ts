@@ -25,185 +25,185 @@ interface HelpItem {
 export class AdminHelpComponent implements OnInit {
   searchTerm: string = '';
   filteredSections: HelpSection[] = [];
-  
+
   helpSections: HelpSection[] = [
     {
       id: 'getting-started',
-      title: 'Getting Started',
+      title: 'Начало работы',
       icon: 'rocket',
       expanded: true,
       items: [
         {
-          question: 'How do I navigate the admin panel?',
-          answer: 'Use the sidebar on the left to access different modules. The dashboard provides an overview of all entities. Each module has its own dedicated page for managing that entity type.'
+          question: 'Как пользоваться административной панелью?',
+          answer: 'Используйте боковое меню слева для перехода между модулями. Дашборд показывает сводную информацию и быстрый доступ к основным разделам. Каждый модуль имеет отдельную страницу для управления соответствующими сущностями.'
         },
         {
-          question: 'What is the Dashboard?',
-          answer: 'The Dashboard is your command center showing real-time statistics, recent activities, and quick access to all modules. It displays total counts for Events, Clubs, Participants, Registrations, and more.'
+          question: 'Что такое Дашборд?',
+          answer: 'Дашборд — это ваш центр управления, где отображается статистика в реальном времени, последние действия и быстрый доступ ко всем модулям. Здесь вы видите общее количество мероприятий, клубов, участников, регистраций и др.'
         },
         {
-          question: 'How do I create a new event?',
-          answer: 'Navigate to Modules → Events, click the "Create Event" button, fill in all required fields (name, description, date, venue, club), and click "Create Event". The event will appear in the table immediately.'
+          question: 'Как создать новое мероприятие?',
+          answer: 'Перейдите в Модули → Мероприятия, нажмите кнопку «Создать мероприятие», заполните все обязательные поля (название, описание, дата, площадка, клуб) и нажмите «Создать». Мероприятие появится в таблице сразу.'
         },
         {
-          question: 'Can I edit existing records?',
-          answer: 'Yes! Most modules (Events, Clubs, Venues, etc.) have an Edit button (pencil icon) next to each record. Click it, modify the fields, and save your changes.'
+          question: 'Можно ли редактировать существующие записи?',
+          answer: 'Да! В большинстве модулей (Мероприятия, Клубы, Площадки и др.) рядом с каждой записью есть кнопка редактирования (значок карандаша). Нажмите её, измените нужные поля и сохраните изменения.'
         }
       ]
     },
     {
       id: 'managing-modules',
-      title: 'Managing Modules',
+      title: 'Управление модулями',
       icon: 'grid',
       expanded: false,
       items: [
         {
-          question: 'What are the different modules?',
-          answer: 'There are 15 modules: Events, Clubs, Venues, Judges, Sponsors, Volunteers, Budgets, Departments, Results, Participations, Registrations, Feedbacks, Users, Admins, and Comments. Each manages a specific entity type.'
+          question: 'Какие существуют модули?',
+          answer: 'Существует 15 модулей: Мероприятия, Клубы, Площадки, Судьи, Спонсоры, Волонтёры, Бюджеты, Отделы, Результаты, Участия, Регистрации, Отзывы, Пользователи, Администраторы и Комментарии. Каждый модуль управляет определённым типом сущности.'
         },
         {
-          question: 'Which modules support full CRUD operations?',
-          answer: 'Full CRUD (Create, Read, Update, Delete): Events, Clubs, Venues, Judges, Sponsors, Volunteers, Budgets, Departments, Results, and Admins. View-Delete only: Participations, Registrations, Feedbacks, Users, and Comments.'
+          question: 'В каких модулях поддерживаются все операции CRUD?',
+          answer: 'Полный набор операций CRUD (Создание, Чтение, Обновление, Удаление): Мероприятия, Клубы, Площадки, Судьи, Спонсоры, Волонтёры, Бюджеты, Отделы, Результаты и Администраторы. Только просмотр и удаление: Участия, Регистрации, Отзывы, Пользователи и Комментарии.'
         },
         {
-          question: 'How do I delete a record?',
-          answer: 'Click the red trash icon next to any record. A confirmation modal will appear. Confirm deletion to permanently remove the record. Note: Deleting certain records (like Clubs) may cascade delete related records.'
+          question: 'Как удалить запись?',
+          answer: 'Нажмите на красный значок корзины рядом с любой записью. Появится модальное окно подтверждения. Подтвердите удаление, чтобы навсегда удалить запись. Примечание: Удаление определённых записей (например, Клубов) может привести к каскадному удалению связанных записей.'
         },
         {
-          question: 'What is the difference between Users and Admins?',
-          answer: 'Users are students who register for events. Admins are platform administrators (you!) who manage all data. User passwords are always hidden for privacy. Admin passwords are bcrypt-hashed for security.'
+          question: 'В чём разница между Пользователями и Администраторами?',
+          answer: 'Пользователи — это студенты, регистрирующиеся на мероприятия. Администраторы — это администраторы платформы (вы!), управляющие всеми данными. Пароли пользователей всегда скрыты для обеспечения конфиденциальности. Пароли администраторов хранятся в виде хешей bcrypt для безопасности.'
         },
         {
-          question: 'Can I export data?',
-          answer: 'Yes! The Feedbacks module has an "Export to Excel" button that downloads all feedback data as a formatted .xlsx file with proper column widths.'
+          question: 'Могу ли я экспортировать данные?',
+          answer: 'Да! В модуле Отзывы есть кнопка «Экспорт в Excel», которая загружает все данные отзывов в виде отформатированного файла .xlsx с правильной шириной столбцов.'
         }
       ]
     },
     {
       id: 'search-filter',
-      title: 'Search & Filter',
+      title: 'Поиск и фильтрация',
       icon: 'search',
       expanded: false,
       items: [
         {
-          question: 'How do I search for records?',
-          answer: 'Every module has a search bar at the top. Type any keyword to filter records in real-time. Search works across multiple fields (name, email, description, etc.).'
+          question: 'Как искать записи?',
+          answer: 'Каждый модуль имеет строку поиска вверху. Введите любое ключевое слово, чтобы отфильтровать записи в реальном времени. Поиск работает по нескольким полям (имя, email, описание и др.).'
         },
         {
-          question: 'How do I clear a search?',
-          answer: 'Click the "X" button that appears in the search bar when you have typed something. This will reset the view to show all records.'
+          question: 'Как очистить поиск?',
+          answer: 'Нажмите на кнопку "X", которая появляется в строке поиска, когда вы что-то ввели. Это сбросит вид и покажет все записи.'
         },
         {
-          question: 'Does search work with partial matches?',
-          answer: 'Yes! Search is case-insensitive and matches partial text. For example, searching "tech" will find "TechFest", "technical", and "TechClub".'
+          question: 'Работает ли поиск с частичными совпадениями?',
+          answer: 'Да! Поиск не чувствителен к регистру и находит частичный текст. Например, поиск "tech" найдёт "TechFest", "technical" и "TechClub".'
         }
       ]
     },
     {
       id: 'activity-tracking',
-      title: 'Activity Tracking',
+      title: 'Отслеживание активности',
       icon: 'activity',
       expanded: false,
       items: [
         {
-          question: 'What is the Recents page?',
-          answer: 'The Recents page shows all admin activities in chronological order. It displays who created, updated, or deleted which entity and when. This helps track changes and monitor admin actions.'
+          question: 'Что такое страница Недавние?',
+          answer: 'Страница Недавние показывает все действия администраторов в хронологическом порядке. Отображается, кто создал, обновил или удалил какую сущность и когда. Это помогает отслеживать изменения и контролировать действия администраторов.'
         },
         {
-          question: 'What appears in Dashboard Recent Activity?',
-          answer: 'The Dashboard shows the last 5-10 recent admin activities with the activity description and timestamp. This gives you a quick overview of recent changes without navigating to the Recents page.'
+          question: 'Что отображается в разделе Недавняя активность на Дашборде?',
+          answer: 'На Дашборде отображаются последние 5-10 недавних действий администраторов с описанием действия и временной меткой. Это даёт вам быстрый обзор недавних изменений без необходимости переходить на страницу Недавние.'
         },
         {
-          question: 'How long is activity history stored?',
-          answer: 'All activity logs are stored permanently in the database. You can view the complete history anytime on the Recents page.'
+          question: 'Как долго хранится история активности?',
+          answer: 'Все журналы активности хранятся в базе данных постоянно. Вы можете в любой момент просмотреть полную историю на странице Недавние.'
         }
       ]
     },
     {
       id: 'security',
-      title: 'Security & Permissions',
+      title: 'Безопасность и права доступа',
       icon: 'shield',
       expanded: false,
       items: [
         {
-          question: 'Are passwords secure?',
-          answer: 'Absolutely! User and Admin passwords are never displayed in the interface. Admin passwords are hashed using bcrypt (industry-standard one-way encryption) before storage. Nobody, including admins, can view plain-text passwords.'
+          question: 'Пароли безопасны?',
+          answer: 'Абсолютно! Пароли пользователей и администраторов никогда не отображаются в интерфейсе. Пароли администраторов хешируются с использованием bcrypt (стандартное шифрование с однонаправленным ключом) перед хранением. Никто, включая администраторов, не может увидеть пароли в открытом виде.'
         },
         {
-          question: 'Can I delete my own admin account?',
-          answer: 'No, the system prevents self-deletion. The delete button is disabled for your own account to prevent accidental lockouts. You can edit your account but not delete it.'
+          question: 'Могу ли я удалить свою учётную запись администратора?',
+          answer: 'Нет, система предотвращает самоуничтожение. Кнопка удаления отключена для вашей учётной записи, чтобы избежать случайных блокировок. Вы можете редактировать свою учётную запись, но не удалять её.'
         },
         {
-          question: 'Who can access the admin panel?',
-          answer: 'Only users with admin role can access the admin panel. Admin authentication is separate from student authentication. Admins must log in via the admin login page.'
+          question: 'Кто может получить доступ к административной панели?',
+          answer: 'Только пользователи с ролью администратора могут получить доступ к административной панели. Аутентификация администраторов отделена от аутентификации студентов. Администраторы должны входить в систему через страницу входа для администраторов.'
         },
         {
-          question: 'Does my session persist?',
-          answer: 'Yes! When you log in, your session is saved in localStorage. If you close the browser and return later, you\'ll be automatically redirected to the admin dashboard without needing to log in again.'
+          question: 'Сохраняется ли моя сессия?',
+          answer: 'Да! Когда вы входите в систему, ваша сессия сохраняется в localStorage. Если вы закроете браузер и вернётесь позже, вы будете автоматически перенаправлены на панель администратора без необходимости повторного входа.'
         }
       ]
     },
     {
       id: 'tips-tricks',
-      title: 'Tips & Best Practices',
+      title: 'Советы и рекомендации',
       icon: 'lightbulb',
       expanded: false,
       items: [
         {
-          question: 'How do I quickly refresh data?',
-          answer: 'Use the "Sync" button on the Dashboard (rotating arrows icon) to refresh all statistics. Individual modules reload data automatically after Create, Update, or Delete operations.'
+          question: 'Как быстро обновить данные?',
+          answer: 'Используйте кнопку "Синхронизировать" на Дашборде (значок вращающихся стрелок), чтобы обновить все статистические данные. Отдельные модули автоматически обновляют данные после операций Создания, Обновления или Удаления.'
         },
         {
-          question: 'What if I accidentally delete something?',
-          answer: 'Deletion is permanent and cannot be undone. Always double-check before confirming deletion. The confirmation modal shows exactly what will be deleted and warns about cascade deletes.'
+          question: 'Что делать, если я случайно что-то удалил?',
+          answer: 'Удаление является окончательным и не может быть отменено. Всегда дважды проверяйте перед подтверждением удаления. Модальное окно подтверждения показывает, что именно будет удалено, и предупреждает о каскадном удалении.'
         },
         {
-          question: 'How do I create an event with all relationships?',
-          answer: 'Before creating an event, ensure the required entities exist: Venue, Club, and Judge. Create these first in their respective modules, then they\'ll appear in the Event creation form dropdowns.'
+          question: 'Как создать мероприятие со всеми связями?',
+          answer: 'Перед созданием мероприятия убедитесь, что необходимые сущности существуют: Площадка, Клуб и Судья. Сначала создайте их в соответствующих модулях, затем они появятся в выпадающих списках формы создания мероприятия.'
         },
         {
-          question: 'Can I view user-submitted data?',
-          answer: 'Yes! Registrations show who registered for events, Participations show who participated, Feedbacks show user feedback with ratings, and Comments show user comments. All these are View-Delete only to preserve data integrity.'
+          question: 'Могу ли я просматривать данные, отправленные пользователями?',
+          answer: 'Да! Регистрации показывают, кто зарегистрировался на мероприятия, Участия показывают, кто принял участие, Отзывы показывают отзывы пользователей с оценками, а Комментарии показывают комментарии пользователей. Все эти данные доступны только для просмотра и удаления, чтобы сохранить целостность данных.'
         }
       ]
     },
     {
       id: 'troubleshooting',
-      title: 'Troubleshooting',
+      title: 'Устранение неполадок',
       icon: 'tool',
       expanded: false,
       items: [
         {
-          question: 'The delete success message is not showing',
-          answer: 'This has been fixed! Toast notifications now use the YOKATTA pattern (no *ngIf on toast elements, only [class.show] binding). If you still don\'t see toasts, check browser console for errors.'
+          question: 'Сообщение об успешном удалении не отображается',
+          answer: 'Это было исправлено! Уведомления теперь используют паттерн YOKATTA (без *ngIf на элементах уведомлений, только привязка [class.show]). Если вы всё ещё не видите уведомлений, проверьте консоль браузера на наличие ошибок.'
         },
         {
-          question: 'Dropdown lists are empty in forms',
-          answer: 'Empty dropdowns mean the related entities haven\'t been created yet. For example, if Event venue dropdown is empty, go to Venues module and create venues first.'
+          question: 'Списки выпадающих меню пустые в формах',
+          answer: 'Пустые выпадающие списки означают, что связанные сущности ещё не созданы. Например, если выпадающий список площадок мероприятия пуст, перейдите в модуль Площадки и создайте площадки сначала.'
         },
         {
-          question: 'Search is not working',
-          answer: 'Ensure you\'re typing in the search field and that records exist. Search filters in real-time as you type. If no matches are found, you\'ll see a "No results" message.'
+          question: 'Поиск не работает',
+          answer: 'Убедитесь, что вы вводите текст в поле поиска и что записи существуют. Поиск фильтрует данные в реальном времени по мере ввода текста. Если совпадений нет, вы увидите сообщение "Нет результатов".'
         },
         {
-          question: 'How do I log out?',
-          answer: 'Click your admin name/icon at the bottom of the sidebar. This will open account options where you can log out. Logging out clears your session and redirects to the login page.'
+          question: 'Как выйти из системы?',
+          answer: 'Нажмите на своё имя/иконку внизу бокового меню. Это откроет параметры учётной записи, где вы сможете выйти из системы. Выход из системы очищает вашу сессию и перенаправляет на страницу входа.'
         }
       ]
     },
     {
       id: 'keyboard-shortcuts',
-      title: 'Keyboard Shortcuts',
+      title: 'Горячие клавиши',
       icon: 'keyboard',
       expanded: false,
       items: [
         {
-          question: 'Are there keyboard shortcuts?',
-          answer: 'While dedicated keyboard shortcuts are not yet implemented, you can use standard browser shortcuts: Ctrl+F to search within a page, Tab to navigate form fields, Enter to submit forms, and Esc to close modals.'
+          question: 'Существуют ли горячие клавиши?',
+          answer: 'Хотя специальные горячие клавиши ещё не реализованы, вы можете использовать стандартные клавиши браузера: Ctrl+F для поиска по странице, Tab для навигации по полям формы, Enter для отправки форм и Esc для закрытия модальных окон.'
         },
         {
-          question: 'How do I quickly navigate between modules?',
-          answer: 'Use the sidebar navigation. Click on any module name to navigate instantly. The active module is highlighted in the sidebar so you always know where you are.'
+          question: 'Как быстро переключаться между модулями?',
+          answer: 'Используйте боковое меню навигации. Нажмите на любое название модуля, чтобы мгновенно перейти к нему. Активный модуль выделен в боковом меню, так что вы всегда знаете, где находитесь.'
         }
       ]
     }
@@ -222,7 +222,7 @@ export class AdminHelpComponent implements OnInit {
 
   filterHelp() {
     const term = this.searchTerm.toLowerCase().trim();
-    
+
     if (!term) {
       this.filteredSections = [...this.helpSections];
       // Reset all expanded states

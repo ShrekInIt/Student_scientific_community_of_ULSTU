@@ -1,35 +1,35 @@
 <div class="admin-results-module">
-  <!-- Module Header -->
+  <!-- Заголовок модуля -->
   <div class="module-header">
-    <h1>Results Module</h1>
+    <h1>Модуль результатов</h1>
   </div>
 
-  <!-- Stats Container -->
+  <!-- Контейнер статистики -->
   <div class="stats-container">
     <div class="stats-content">
       <div class="stat-item">
-        <div class="stat-label">Total Results</div>
+        <div class="stat-label">Всего результатов</div>
         <div class="stat-value">{{ totalResults }}</div>
       </div>
       <div class="stat-item">
-        <div class="stat-label">Top Rankers</div>
+        <div class="stat-label">Лучшие участники</div>
         <div class="stat-value">{{ activeResults }}</div>
       </div>
     </div>
   </div>
 
-  <!-- Actions Bar -->
+  <!-- Панель действий -->
   <div class="actions-bar">
-    <!-- Search -->
+    <!-- Поиск -->
     <div class="search-container">
       <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <circle cx="11" cy="11" r="8" stroke-width="2"/>
         <path d="m21 21-4.35-4.35" stroke-width="2"/>
       </svg>
-      <input 
-        type="text" 
-        class="search-input" 
-        placeholder="Search by participant name, event, college, rank, or score..."
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Поиск по имени участника, событию, колледжу, рангу или баллам..."
         [(ngModel)]="searchTerm"
         (input)="filterResults()"
       />
@@ -41,29 +41,29 @@
       </button>
     </div>
 
-    <!-- Create Button -->
+    <!-- Кнопка создания -->
     <button class="create-btn" (click)="openCreateModal()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <circle cx="12" cy="12" r="10" stroke-width="2"/>
         <line x1="12" y1="8" x2="12" y2="16" stroke-width="2"/>
         <line x1="8" y1="12" x2="16" y2="12" stroke-width="2"/>
       </svg>
-      Create Result
+      Создать результат
     </button>
   </div>
 
-  <!-- Data Table -->
+  <!-- Таблица данных -->
   <div class="table-container">
     <table class="data-table">
       <thead>
         <tr>
-          <th>Sr. No.</th>
-          <th>Rank</th>
-          <th>Score</th>
-          <th>Participant Name</th>
-          <th>College</th>
-          <th>Event</th>
-          <th>Actions</th>
+          <th>№</th>
+          <th>Ранг</th>
+          <th>Баллы</th>
+          <th>Имя участника</th>
+          <th>Колледж</th>
+          <th>Событие</th>
+          <th>Действия</th>
         </tr>
       </thead>
       <tbody>
@@ -71,11 +71,11 @@
           <td>{{ i + 1 }}</td>
           <td><span class="rank-badge rank-{{ result.rank }}">{{ result.rank }}</span></td>
           <td>{{ result.score }}</td>
-          <td>{{ result.participantName || 'N/A' }}</td>
-          <td>{{ result.participantCollege || 'N/A' }}</td>
-          <td>{{ result.eventName || 'N/A' }}</td>
+          <td>{{ result.participantName || 'Нет данных' }}</td>
+          <td>{{ result.participantCollege || 'Нет данных' }}</td>
+          <td>{{ result.eventName || 'Нет данных' }}</td>
           <td>
-            <button class="delete-btn" (click)="openDeleteModal(result.resultId!)" title="Delete Result">
+            <button class="delete-btn" (click)="openDeleteModal(result.resultId!)" title="Удалить результат">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <polyline points="3 6 5 6 21 6" stroke-width="2"/>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2"/>
@@ -92,18 +92,18 @@
               <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/>
               <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/>
             </svg>
-            <p>{{ searchTerm ? 'No results found matching your search' : 'No results available' }}</p>
+            <p>{{ searchTerm ? 'Результаты, соответствующие вашему запросу, не найдены' : 'Результаты отсутствуют' }}</p>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Create Modal -->
+  <!-- Создать Модальное Окно -->
   <div class="modal-overlay" *ngIf="showCreateModal" (click)="closeCreateModal()">
     <div class="modal-container" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h2>Create New Result</h2>
+        <h2>Создать новый результат</h2>
         <button class="close-btn" (click)="closeCreateModal()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/>
@@ -114,67 +114,67 @@
 
       <form [formGroup]="resultForm" (ngSubmit)="onSubmit()" class="modal-form">
         <div class="form-grid">
-          <!-- Rank -->
+          <!-- Ранг -->
           <div class="form-group">
-            <label for="rank">Rank *</label>
-            <input 
-              type="number" 
-              id="rank" 
+            <label for="rank">Ранг *</label>
+            <input
+              type="number"
+              id="rank"
               formControlName="rank"
-              placeholder="Enter rank (e.g., 1, 2, 3)"
+              placeholder="Введите ранг (например, 1, 2, 3)"
               min="1"
             />
             <span class="error-text" *ngIf="resultForm.get('rank')?.invalid && resultForm.get('rank')?.touched">
-              Rank is required and must be a positive number
+              Ранг обязателен и должен быть положительным числом
             </span>
           </div>
 
-          <!-- Score -->
+          <!-- Баллы -->
           <div class="form-group">
-            <label for="score">Score *</label>
-            <input 
-              type="number" 
-              id="score" 
+            <label for="score">Баллы *</label>
+            <input
+              type="number"
+              id="score"
               formControlName="score"
-              placeholder="Enter score"
+              placeholder="Введите баллы"
               step="0.01"
               min="0"
             />
             <span class="error-text" *ngIf="resultForm.get('score')?.invalid && resultForm.get('score')?.touched">
-              Score is required and must be a positive number
+              Баллы обязательны и должны быть положительным числом
             </span>
           </div>
 
-          <!-- Event -->
+          <!-- Событие -->
           <div class="form-group full-width">
-            <label for="eventId">Event *</label>
+            <label for="eventId">Событие *</label>
             <select id="eventId" formControlName="eventId">
-              <option value="" disabled selected>Select an event</option>
+              <option value="" disabled selected>Выберите событие</option>
               <option *ngFor="let event of events" [value]="event.event_id">
                 {{ event.event_name }}
               </option>
             </select>
             <span class="error-text" *ngIf="resultForm.get('eventId')?.invalid && resultForm.get('eventId')?.touched">
-              Event is required
+              Событие обязательно
             </span>
           </div>
 
-          <!-- Participation -->
+          <!-- Участие -->
           <div class="form-group full-width">
-            <label for="participationId">Participant *</label>
+            <label for="participationId">Участник *</label>
             <select id="participationId" formControlName="participationId">
-              <option value="" disabled selected>Select a participant</option>
+              <option value="" disabled selected>Выберите участника</option>
               <option *ngFor="let participation of participations" [value]="participation.participationId">
                 {{ participation.participantName }} - {{ participation.eventName }} ({{ participation.participantCollege }})
               </option>
             </select>
             <span class="error-text" *ngIf="resultForm.get('participationId')?.invalid && resultForm.get('participationId')?.touched">
-              Participant is required
+              Участник обязателен
             </span>
           </div>
         </div>
 
-        <!-- Error Banner -->
+        <!-- Баннер ошибок -->
         <div class="error-banner" *ngIf="error">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <circle cx="12" cy="12" r="10" stroke-width="2"/>
@@ -186,22 +186,22 @@
 
         <div class="modal-actions">
           <button type="button" class="btn-cancel" (click)="closeCreateModal()">
-            Cancel
+            Отмена
           </button>
           <button type="submit" class="btn-submit" [disabled]="resultForm.invalid || loading">
-            <span *ngIf="!loading">Create Result</span>
-            <span *ngIf="loading">Creating...</span>
+            <span *ngIf="!loading">Создать результат</span>
+            <span *ngIf="loading">Создание...</span>
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Delete Modal -->
+  <!-- Модальное окно удаления -->
   <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
     <div class="modal-container delete-modal" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h2>Confirm Deletion</h2>
+        <h2>Подтвердите удаление</h2>
         <button class="close-btn" (click)="closeDeleteModal()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/>
@@ -218,28 +218,28 @@
             <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2"/>
           </svg>
         </div>
-        <p class="delete-message">Are you sure you want to delete this result?</p>
-        <p class="delete-warning">This action cannot be undone.</p>
+        <p class="delete-message">Вы уверены, что хотите удалить этот результат?</p>
+        <p class="delete-warning">Это действие нельзя отменить.</p>
       </div>
 
       <div class="modal-actions">
         <button type="button" class="btn-cancel" (click)="closeDeleteModal()">
-          Cancel
+          Отмена
         </button>
         <button type="button" class="btn-delete" (click)="confirmDelete()" [disabled]="loading">
-          <span *ngIf="!loading">Delete Result</span>
-          <span *ngIf="loading">Deleting...</span>
+          <span *ngIf="!loading">Удалить результат</span>
+          <span *ngIf="loading">Удаление...</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Loading Overlay -->
+  <!-- Загрузка Оверлей -->
   <div class="loading-overlay" *ngIf="loading && !showDeleteModal">
     <div class="spinner"></div>
   </div>
 
-  <!-- Success Toast -->
+  <!-- Успех Тост -->
   <div class="toast success-toast" [class.show]="showSuccessToast">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-width="2"/>
@@ -248,7 +248,7 @@
     <span>{{ toastMessage }}</span>
   </div>
 
-  <!-- Error Toast -->
+  <!-- Ошибка Тост -->
   <div class="toast error-toast" [class.show]="showErrorToast">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <circle cx="12" cy="12" r="10" stroke-width="2"/>

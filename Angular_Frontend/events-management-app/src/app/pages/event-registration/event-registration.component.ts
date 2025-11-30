@@ -28,9 +28,9 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
   showSuccess = false;
   participantId: string | null = null;
   errorMessage = '';
-  
+
   private subscriptions: Subscription[] = [];
-  
+
   eventImages = [
     'assets/images/Event-Images/istockphoto-1166978137-612x612.jpg',
     'assets/images/Event-Images/istockphoto-1175031702-612x612.jpg',
@@ -61,7 +61,7 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
     this.registrationForm = this.fb.group({
       name: ['', [Validators.required]],
       college: ['', [Validators.required]],
-      contact: ['', [Validators.required, Validators.pattern(/^\+?[\d\s\-\(\)]{10,}$/)]],
+      contact: ['', [Validators.required, Validators.pattern(/^\+?[\d\s\-()]{10,}$/)]],
       email: ['', [Validators.required, Validators.email]]
     });
   }
@@ -69,7 +69,7 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Get current user
     this.currentUser = this.authService.getCurrentUser() as User;
-    
+
     // Get event ID from route
     const eventId = this.route.snapshot.params['id'];
     if (eventId) {
@@ -89,7 +89,7 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
   private loadEventDetails(eventId: number): void {
     this.isLoading = true;
     this.cdr.detectChanges();
-    
+
     // Load event details
     const eventSub = this.eventService.getEventById(eventId).subscribe({
       next: (event) => {
@@ -142,12 +142,12 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
   openRegistrationModal(): void {
     if (!this.authService.isLoggedIn()) {
       // Redirect to login with return URL
-      this.router.navigate(['/'], { 
-        queryParams: { 
+      this.router.navigate(['/'], {
+        queryParams: {
           returnUrl: this.router.url,
           showLogin: 'true',
           feature: 'registration'
-        } 
+        }
       });
       return;
     }
@@ -163,10 +163,10 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
     if (!dateStr) return '';
     try {
       const date = new Date(dateStr);
-      return date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+      return date.toLocaleDateString('ru-RU', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
     } catch {
       return dateStr;
@@ -176,24 +176,39 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
   formatTime(timeStr: string): string {
     if (!timeStr) return '';
     try {
-      // Check if the time already has AM/PM
-      if (timeStr.toLowerCase().includes('am') || timeStr.toLowerCase().includes('pm')) {
-        return timeStr; // Return as-is if already formatted
-      }
-      
-      // Handle 24-hour format conversion
+      // Если время уже в 24-часовом формате, возвращаем как есть
       let time = timeStr.trim();
-      if (time.includes(':')) {
-        const [hours, minutes] = time.split(':');
-        const hour24 = parseInt(hours);
-        const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
-        const ampm = hour24 >= 12 ? 'PM' : 'AM';
-        return `${hour12}:${minutes} ${ampm}`;
+
+      // Проверяем, содержит ли время AM/PM
+      const hasAmPm = time.toLowerCase().includes('am') || time.toLowerCase().includes('pm');
+
+      if (!hasAmPm) {
+        return time; // Возвращаем как есть, если нет AM/PM
       }
-      return time;
+
+      // Конвертируем из 12-часового в 24-часовой формат
+      time = time.toLowerCase();
+      let [timePart, modifier] = time.split(' ');
+      let [hours, minutes] = timePart.split(':');
+
+      let hourInt = parseInt(hours);
+
+      if (modifier === 'pm' && hourInt < 12) {
+        hourInt += 12;
+      } else if (modifier === 'am' && hourInt === 12) {
+        hourInt = 0;
+      }
+
+      // Форматируем в 24-часовой формат
+      return `${hourInt.toString().padStart(2, '0')}:${minutes}`;
     } catch {
       return timeStr;
     }
+  }
+
+  formatEventDate(dateString: string): string {
+    const date = new Date(dateString);
+    return isNaN(date.getTime()) ? '' : date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
   }
 
   formatEventFee(amount?: number): string {
@@ -203,7 +218,7 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
 
   getEventFee(): number {
     if (!this.event) return 0;
-    
+
     // Calculate fee based on event type
     const feeStructure: { [key: string]: number } = {
       'Technical': 500,
@@ -214,7 +229,7 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
       'Competition': 600,
       'default': 350
     };
-    
+
     return feeStructure[this.event.event_type] || feeStructure['default'];
   }
 

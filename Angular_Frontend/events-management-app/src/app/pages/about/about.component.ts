@@ -11,8 +11,8 @@ interface TeamMember {
   bio: string;
   skills: string[];
   avatar: string;
-  linkedin?: string;
-  github?: string;
+  vk?: string;
+  telegram?: string;
 }
 
 interface Sponsor {
@@ -32,186 +32,165 @@ interface Sponsor {
 })
 export class AboutComponent implements OnInit {
   isDarkMode = false;
-  
+
   // Team members data - showing 4 detailed profiles out of 42 total
   teamMembers: TeamMember[] = [
     {
       id: 1,
-      name: 'Alex Chen',
-      role: 'Lead Full Stack Developer',
-      bio: '5+ years in React, Angular, and Spring Boot. Expert in full-stack development.',
+      name: 'Кирилл Долгов',
+      role: 'Программный директор НОЦ "Точка кипения"',
+      bio: 'Главный специалист отдела организационно-технического обеспечения НОЦ "Точка кипения " ',
       skills: ['Angular', 'Spring Boot', 'TypeScript', 'Java'],
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
-      linkedin: 'https://linkedin.com/in/alexchen',
-      github: 'https://github.com/alexchen'
+      avatar: 'https://leader-id.storage.yandexcloud.net/user_photo/444539/65399960a15ad567641599_360.jpg',
+      vk: 'https://vk.com/dolgov_ks',
+      telegram: 'https://t.me/dolgov_ks'
     },
     {
       id: 2,
-      name: 'Sarah Johnson',
-      role: 'UI/UX Designer & Frontend Developer',
-      bio: 'Creative designer specializing in modern web interfaces and user-centered design.',
-      skills: ['UI/UX Design', 'React', 'CSS3', 'Figma'],
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b372?w=200&h=200&fit=crop&crop=face',
-      linkedin: 'https://linkedin.com/in/sarahjohnson',
-      github: 'https://github.com/sarahjohnson'
+      name: 'Мария Новичкова',
+      role: 'Начальник отдела медиапроектирования',
+      bio: 'Начальник отдела медиапроектирования Департамента инноваций и технологического предпринимательства',
+      skills: ['UI/UX Design', 'Figma'],
+      avatar: 'https://leader-id.storage.yandexcloud.net/user_photo/384975/63c683f193bca411543485_360.jpeg',
+      vk: '№',
+      telegram: '№'
     },
     {
       id: 3,
-      name: 'Michael Rodriguez',
-      role: 'Backend Architect & DevOps Engineer',
-      bio: 'Expert in microservices architecture and cloud deployment solutions.',
-      skills: ['Spring Boot', 'AWS', 'Kubernetes', 'PostgreSQL'],
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
-      linkedin: 'https://linkedin.com/in/michaelrodriguez',
-      github: 'https://github.com/michaelrodriguez'
+      name: 'Денис Ефремов',
+      role: 'Директор НОЦ "Метатория"',
+      bio: 'Директор департамента инноваций и технологического предпринимательства',
+      skills: ['Product Management', 'Agile/Scrum', 'Testing', 'Analytics'],
+      avatar: 'https://leader-id.storage.yandexcloud.net/upload/255879/bc0b8832-2c91-4bd9-b6a1-04ae1672ff43_360.jpg',
+      vk: '№',
+      telegram: '№'
     },
     {
       id: 4,
-      name: 'Emma Wilson',
-      role: 'Product Manager & QA Lead',
-      bio: 'Results-driven product manager with expertise in agile methodologies.',
+      name: 'Елена Лукьянова',
+      role: 'Директор НОЦ "Точка кипения"',
+      bio: 'Директор, ассистент, кафедра "Информационные системы"',
       skills: ['Product Management', 'Agile/Scrum', 'Testing', 'Analytics'],
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
-      linkedin: 'https://linkedin.com/in/emmawilson',
-      github: 'https://github.com/emmawilson'
+      avatar: 'https://leader-id.storage.yandexcloud.net/upload/870326/139ae6fe-f46c-41b0-8b19-2f20ce7e3093_360.jpg',
+      vk: '№',
+      telegram: '№'
     }
   ];
-  
+
   // Sponsors data
   sponsors: Sponsor[] = [
     {
       id: 1,
       name: 'TechCorp',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg',
-      description: 'Leading technology solutions provider',
+      description: 'Ведущий поставщик технологических решений',
       website: 'https://techcorp.com'
     },
     {
       id: 2,
       name: 'InnovateHub',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoft/microsoft-original.svg',
-      description: 'Innovation and startup accelerator',
+      description: 'Акселератор инноваций и стартапов',
       website: 'https://innovatehub.com'
     },
     {
       id: 3,
       name: 'EduTech Solutions',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazon/amazon-original.svg',
-      description: 'Educational technology platform',
+      description: 'Платформа образовательных технологий',
       website: 'https://edutech.com'
     },
     {
       id: 4,
-      name: 'CloudVentures',
-      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg',
-      description: 'Cloud infrastructure services',
-      website: 'https://cloudventures.com'
-    },
-    {
-      id: 5,
-      name: 'DataFlow Inc',
-      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg',
-      description: 'Big data and analytics solutions',
-      website: 'https://dataflow.com'
-    },
-    {
-      id: 6,
       name: 'NextGen Labs',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
-      description: 'Research and development lab',
+      description: 'Лаборатория исследований и разработок',
       website: 'https://nextgenlabs.com'
     },
     {
-      id: 7,
+      id: 5,
       name: 'CodeCraft Studios',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
-      description: 'Modern web development agency',
+      description: 'Агентство современного веб-разработки',
       website: 'https://codecraft.studio'
     },
-    {
-      id: 8,
-      name: 'Digital Horizon',
-      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
-      description: 'Full-stack development solutions',
-      website: 'https://digitalhorizon.net'
-    }
   ];
-  
+
   // Event management workflow steps
   workflowSteps = [
     {
       id: 1,
-      title: 'Event Creation',
-      description: 'Organizers create events with detailed information, schedules, and requirements.',
+      title: 'Создание мероприятий',
+      description: 'Организаторы создают мероприятия с подробной информацией, расписанием и требованиями.',
       icon: 'create'
     },
     {
       id: 2,
-      title: 'Registration System',
-      description: 'Seamless registration process for participants with automated confirmations.',
+      title: 'Система регистрации',
+      description: 'Удобный процесс регистрации для участников с автоматическими подтверждениями.',
       icon: 'register'
     },
     {
       id: 3,
-      title: 'Event Management',
-      description: 'Real-time event tracking, participant management, and communication tools.',
+      title: 'Управление мероприятиями',
+      description: 'Отслеживание мероприятий в реальном времени, управление участниками и инструменты для общения.',
       icon: 'manage'
     },
     {
       id: 4,
-      title: 'Analytics & Feedback',
-      description: 'Comprehensive analytics and feedback collection for continuous improvement.',
+      title: 'Аналитика и отзывы',
+      description: 'Комплексная аналитика и сбор отзывов для постоянного улучшения.',
       icon: 'analytics'
     }
   ];
-  
+
   constructor(
     private themeService: ThemeService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
-  
+
   ngOnInit(): void {
     // Subscribe to theme changes
     this.themeService.isDarkMode$.subscribe(
       isDark => this.isDarkMode = isDark
     );
   }
-  
+
   // Open sponsor website
   openSponsorWebsite(sponsor: Sponsor): void {
     if (sponsor.website) {
       window.open(sponsor.website, '_blank');
     }
   }
-  
+
   // Helper methods for fallback images
   getTeamMemberFallbackImage(name: string): string {
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3a72ec&color=ffffff&size=200`;
   }
-  
+
   getSponsorFallbackImage(name: string): string {
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=8b5cf6&color=ffffff&size=80`;
   }
-  
+
   // Handle image errors
   onTeamImageError(member: TeamMember): void {
     member.avatar = this.getTeamMemberFallbackImage(member.name);
   }
-  
+
   onSponsorImageError(sponsor: Sponsor): void {
     sponsor.logo = this.getSponsorFallbackImage(sponsor.name);
   }
 
   // Open team member social links
-  openLinkedIn(member: TeamMember): void {
-    if (member.linkedin) {
-      window.open(member.linkedin, '_blank');
+  openVK(member: TeamMember): void {
+    if (member.vk) {
+      window.open(member.vk, '_blank');
     }
   }
-  
-  openGitHub(member: TeamMember): void {
-    if (member.github) {
-      window.open(member.github, '_blank');
+
+  openTelegram(member: TeamMember): void {
+    if (member.telegram) {
+      window.open(member.telegram, '_blank');
     }
   }
 }

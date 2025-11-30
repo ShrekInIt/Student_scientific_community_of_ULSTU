@@ -26,11 +26,11 @@ export class AdminUsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
   searchTerm: string = '';
-  
+
   showDeleteModal = false;
   selectedUserId: number | null = null;
   loading = false;
-  
+
   toastMessage = '';
   showSuccessToast = false;
   showErrorToast = false;
@@ -60,7 +60,7 @@ export class AdminUsersComponent implements OnInit {
 
   filterUsers() {
     const term = this.searchTerm.toLowerCase().trim();
-    
+
     if (!term) {
       this.filteredUsers = [...this.users];
       return;
@@ -105,41 +105,41 @@ export class AdminUsersComponent implements OnInit {
 
   async confirmDelete() {
     if (!this.selectedUserId) return;
-    
+
     this.loading = true;
     this.cdr.detectChanges();
-    
+
     try {
       await this.http.delete(`${this.apiUrl}/users/${this.selectedUserId}`, { responseType: 'text' }).toPromise();
-      
+
       await this.loadUsers();
       await new Promise(resolve => setTimeout(resolve, 3000));
-      
+
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedUserId = null;
       this.cdr.detectChanges();
-      
+
       await new Promise(resolve => setTimeout(resolve, 300));
-      
-      this.toastMessage = 'User deleted successfully!';
+
+      this.toastMessage = 'Пользователь успешно удалён!';
       this.showSuccessToast = true;
       console.log('Toast state:', this.showSuccessToast, 'Message:', this.toastMessage);
       this.cdr.detectChanges();
-      
+
       setTimeout(() => {
         console.log('Hiding toast...');
         this.showSuccessToast = false;
         this.cdr.detectChanges();
       }, 3000);
-      
+
     } catch (error: any) {
       console.error('Error deleting user:', error);
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedUserId = null;
       this.cdr.detectChanges();
-      this.showErrorMessage('Failed to delete user.');
+      this.showErrorMessage('Не удалось удалить пользователя.');
     }
   }
 

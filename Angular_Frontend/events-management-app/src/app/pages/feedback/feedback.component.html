@@ -6,27 +6,27 @@
         <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Back
+      Назад
     </button>
-    
+
     <!-- Title and Subtitle - Center aligned -->
     <div class="header-text">
-      <h1>Event Feedback</h1>
-      <p>Help us improve by sharing your experience</p>
+      <h1>Отзывы о мероприятии</h1>
+      <p>Помогите нам стать лучше, поделившись своим опытом</p>
     </div>
   </div>
 
   <!-- Feedback Form -->
   <div class="feedback-form-container">
     <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" class="feedback-form">
-      
+
       <!-- Personal Information Section -->
       <div class="form-section">
-        <h2>Personal Information</h2>
-        
+        <h2>Персональная информация</h2>
+
         <div class="form-row">
           <div class="form-group">
-            <label for="name">Full Name *</label>
+            <label for="name">ФИО *</label>
             <input
               id="name"
               type="text"
@@ -40,7 +40,7 @@
           </div>
 
           <div class="form-group">
-            <label for="email">Email Address *</label>
+            <label for="email">E-mail *</label>
             <input
               id="email"
               type="email"
@@ -55,7 +55,7 @@
         </div>
 
         <div class="form-group">
-          <label for="contactNo">Contact Number *</label>
+          <label for="contactNo">Номер тел. *</label>
           <input
             id="contactNo"
             type="tel"
@@ -71,12 +71,12 @@
 
       <!-- Rating Section -->
       <div class="form-section">
-        <h2>Event Ratings</h2>
-        <p class="rating-description">Please rate the following aspects of the event (1 = Poor, 5 = Excellent)</p>
-        
+        <h2>Рейтинги мероприятий</h2>
+        <p class="rating-description">Оцените, пожалуйста, следующие аспекты мероприятия (1 = Плохо, 5 = Отлично)</p>
+
         <!-- Overall Event Rating -->
         <div class="rating-group">
-          <label>Overall Event Experience *</label>
+          <label>Общий опыт мероприятия *</label>
           <div class="star-rating">
             <button
               type="button"
@@ -93,7 +93,7 @@
 
         <!-- Organization & Management Rating -->
         <div class="rating-group">
-          <label>Organization & Management *</label>
+          <label>Организация и управление *</label>
           <div class="star-rating">
             <button
               type="button"
@@ -110,7 +110,7 @@
 
         <!-- Venue & Facilities Rating -->
         <div class="rating-group">
-          <label>Venue & Facilities *</label>
+          <label>Место проведения и удобства *</label>
           <div class="star-rating">
             <button
               type="button"
@@ -127,7 +127,7 @@
 
         <!-- Technical Content Rating -->
         <div class="rating-group">
-          <label>Technical Content *</label>
+          <label>Техническое содержание *</label>
           <div class="star-rating">
             <button
               type="button"
@@ -145,13 +145,13 @@
 
       <!-- Comments Section -->
       <div class="form-section">
-        <h2>Additional Comments</h2>
+        <h2>Дополнительные комментарии</h2>
         <div class="form-group">
-          <label for="comments">Your Feedback *</label>
+          <label for="comments">Ваш отзыв *</label>
           <textarea
             id="comments"
             formControlName="comments"
-            placeholder="Please share your detailed feedback, suggestions, or any specific comments about the event..."
+            placeholder="Пожалуйста, поделитесь своими подробными отзывами, предложениями или любыми конкретными комментариями о мероприятии..."
             rows="4"
             [class.error]="isFieldInvalid('comments')"
           ></textarea>
@@ -163,11 +163,11 @@
 
       <!-- Submit Button -->
       <div class="form-actions">
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           class="submit-btn"
         >
-          Submit Feedback
+          Отправить отзыв
         </button>
       </div>
     </form>
@@ -184,19 +184,19 @@
           <path d="m9 12 2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h2>Thank You!</h2>
-      <p>Your feedback has been submitted successfully</p>
+      <h2>Спасибо!</h2>
+      <p>Ваш отзыв был успешно отправлен</p>
     </div>
-    
+
     <div class="thank-you-content">
       <div class="success-message">
-        <p>We really appreciate you taking the time to share your thoughts with us. Your feedback helps us improve our events and provide better experiences for everyone.</p>
+        <p>Мы очень ценим, что вы нашли время поделиться с нами своими впечатлениями. Ваши отзывы помогают нам улучшить наши мероприятия и сделать их более приятными для всех.</p>
       </div>
     </div>
-    
+
     <div class="thank-you-actions">
       <button class="primary-btn" (click)="closeThankYouOverlay()">
-        Back to Home
+        Вернуться домой
       </button>
     </div>
   </div>

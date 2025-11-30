@@ -84,12 +84,19 @@ export class AdminVolunteersComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
-    await this.loadVolunteers();
-    await this.loadClubs();
-    await this.loadDepartments();
-    await this.loadVenues();
-    await this.loadEvents();
+  showError(message: string) {
+    console.error(message);
+    // Здесь можно добавить логику отображения ошибки в UI
+  }
+
+  async loadClubs() {
+    try {
+      this.clubs = await firstValueFrom(
+        this.http.get<Club[]>(`${this.apiUrl}/clubs`)
+      );
+    } catch (error) {
+      this.showError('Не удалось загрузить клубы.');
+    }
   }
 
   async loadVolunteers() {
@@ -98,19 +105,8 @@ export class AdminVolunteersComponent implements OnInit {
         this.http.get<Volunteer[]>(`${this.apiUrl}/volunteers`)
       );
       this.filteredVolunteers = [...this.volunteers];
-    } catch (error: any) {
-      console.error('Error loading volunteers:', error);
-      this.error = 'Failed to load volunteers';
-    }
-  }
-
-  async loadClubs() {
-    try {
-      this.clubs = await firstValueFrom(
-        this.http.get<Club[]>(`${this.apiUrl}/clubs`)
-      );
-    } catch (error: any) {
-      console.error('Error loading clubs:', error);
+    } catch (error) {
+      this.showError('Не удалось загрузить волонтеров.');
     }
   }
 
@@ -142,6 +138,11 @@ export class AdminVolunteersComponent implements OnInit {
     } catch (error: any) {
       console.error('Error loading events:', error);
     }
+  }
+
+  async ngOnInit() {
+    await this.loadClubs();
+    await this.loadVolunteers();
   }
 
   filterVolunteers() {
@@ -182,7 +183,7 @@ export class AdminVolunteersComponent implements OnInit {
 
   async onSubmit() {
     if (this.volunteerForm.invalid) {
-      this.error = 'Please fill all required fields correctly';
+      this.error = 'Пожалуйста, заполните все обязательные поля корректно';
       return;
     }
 
@@ -218,8 +219,8 @@ export class AdminVolunteersComponent implements OnInit {
       await this.loadVolunteers();
       this.loading = false;
       this.closeCreateModal();
-      
-      this.toastMessage = 'Volunteer created successfully!';
+
+      this.toastMessage = 'Волонтер успешно создан!';
       this.showSuccessToast = true;
       this.cdr.detectChanges();
 
@@ -229,8 +230,8 @@ export class AdminVolunteersComponent implements OnInit {
       }, 3000);
     } catch (error: any) {
       this.loading = false;
-      this.error = error.error?.message || 'Failed to create volunteer';
-      
+      this.error = error.error?.message || 'Не удалось создать волонтера';
+
       this.toastMessage = this.error;
       this.showErrorToast = true;
       this.cdr.detectChanges();
@@ -263,9 +264,9 @@ export class AdminVolunteersComponent implements OnInit {
 
     try {
       await this.http.delete(`${this.apiUrl}/volunteers/${this.selectedVolunteerId}`, { responseType: 'text' }).toPromise();
-      
+
       await this.loadVolunteers();
-      
+
       await new Promise(resolve => setTimeout(resolve, 3000));
 
       this.loading = false;
@@ -275,7 +276,7 @@ export class AdminVolunteersComponent implements OnInit {
 
       await new Promise(resolve => setTimeout(resolve, 300));
 
-      this.toastMessage = 'Volunteer deleted successfully!';
+      this.toastMessage = 'Волонтер успешно удален!';
       this.showSuccessToast = true;
       this.cdr.detectChanges();
 
@@ -285,8 +286,8 @@ export class AdminVolunteersComponent implements OnInit {
       }, 3000);
     } catch (error: any) {
       this.loading = false;
-      this.error = 'Failed to delete volunteer';
-      
+      this.error = 'Не удалось удалить волонтера';
+
       this.toastMessage = this.error;
       this.showErrorToast = true;
       this.cdr.detectChanges();

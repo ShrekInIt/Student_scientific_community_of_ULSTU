@@ -1,35 +1,35 @@
 <div class="admin-venues-module">
-  <!-- Module Header -->
+  <!-- Заголовок модуля -->
   <div class="module-header">
-    <h1>Venues Module</h1>
+    <h1>Модуль площадок</h1>
   </div>
 
-  <!-- Stats Container -->
+  <!-- Контейнер статистики -->
   <div class="stats-container">
     <div class="stats-content">
       <div class="stat-item">
-        <div class="stat-label">Total Venues</div>
+        <div class="stat-label">Всего площадок</div>
         <div class="stat-value">{{ venues.length }}</div>
       </div>
       <div class="stat-item">
-        <div class="stat-label">Active Records</div>
+        <div class="stat-label">Активные записи</div>
         <div class="stat-value">{{ filteredVenues.length }}</div>
       </div>
     </div>
   </div>
 
-  <!-- Actions Bar -->
+  <!-- Панель действий -->
   <div class="actions-bar">
-    <!-- Search -->
+    <!-- Поиск -->
     <div class="search-container">
       <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <circle cx="11" cy="11" r="8" stroke-width="2"/>
         <path d="m21 21-4.35-4.35" stroke-width="2"/>
       </svg>
-      <input 
-        type="text" 
-        class="search-input" 
-        placeholder="Search by venue name or floor..."
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Поиск по названию площадки или этажу..."
         [(ngModel)]="searchTerm"
         (input)="filterVenues()"
       />
@@ -41,35 +41,35 @@
       </button>
     </div>
 
-    <!-- Create Button -->
+    <!-- Кнопка создания -->
     <button class="create-btn" (click)="openCreateModal()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <circle cx="12" cy="12" r="10" stroke-width="2"/>
         <line x1="12" y1="8" x2="12" y2="16" stroke-width="2"/>
         <line x1="8" y1="12" x2="16" y2="12" stroke-width="2"/>
       </svg>
-      Create Venue
+      Создать площадку
     </button>
   </div>
 
-  <!-- Data Table -->
+  <!-- Таблица данных -->
   <div class="table-container">
     <table class="data-table">
       <thead>
         <tr>
-          <th>Sr. No.</th>
-          <th>Venue Name</th>
-          <th>Floor</th>
-          <th>Actions</th>
+          <th>№</th>
+          <th>Название площадки</th>
+          <th>Этаж</th>
+          <th>Действия</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let venue of filteredVenues; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ venue.name }}</td>
-          <td>Floor {{ venue.floor }}</td>
+          <td>Этаж {{ venue.floor }}</td>
           <td>
-            <button class="delete-btn" (click)="openDeleteModal(venue.venue_id!)" title="Delete Venue">
+            <button class="delete-btn" (click)="openDeleteModal(venue.venue_id!)" title="Удалить площадку">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <polyline points="3 6 5 6 21 6" stroke-width="2"/>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2"/>
@@ -86,18 +86,18 @@
               <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/>
               <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/>
             </svg>
-            <p>{{ searchTerm ? 'No venues found matching your search' : 'No venues available' }}</p>
+            <p>{{ searchTerm ? 'Площадки, соответствующие вашему запросу, не найдены' : 'Площадки отсутствуют' }}</p>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Create Modal -->
+  <!-- Создать Модальное окно -->
   <div class="modal-overlay" *ngIf="showCreateModal" (click)="closeCreateModal()">
     <div class="modal-container" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h2>Create New Venue</h2>
+        <h2>Создать новую площадку</h2>
         <button class="close-btn" (click)="closeCreateModal()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/>
@@ -108,32 +108,32 @@
 
       <form [formGroup]="venueForm" (ngSubmit)="onSubmit()" class="modal-form">
         <div class="form-grid">
-          <!-- Venue Name -->
+          <!-- Название площадки -->
           <div class="form-group full-width">
-            <label for="name">Venue Name *</label>
-            <input 
-              type="text" 
-              id="name" 
+            <label for="name">Название площадки *</label>
+            <input
+              type="text"
+              id="name"
               formControlName="name"
-              placeholder="Enter venue name"
+              placeholder="Введите название площадки"
             />
             <span class="error-text" *ngIf="venueForm.get('name')?.invalid && venueForm.get('name')?.touched">
-              Venue name is required (min 3 characters)
+              Название площадки обязательно (мин. 3 символа)
             </span>
           </div>
 
-          <!-- Floor -->
+          <!-- Этаж -->
           <div class="form-group full-width">
-            <label for="floor">Floor *</label>
-            <input 
-              type="number" 
-              id="floor" 
+            <label for="floor">Этаж *</label>
+            <input
+              type="number"
+              id="floor"
               formControlName="floor"
-              placeholder="Enter floor number (0 for ground floor)"
+              placeholder="Введите номер этажа (0 для первого этажа)"
               min="0"
             />
             <span class="error-text" *ngIf="venueForm.get('floor')?.invalid && venueForm.get('floor')?.touched">
-              Floor number is required (must be 0 or greater)
+              Номер этажа обязателен (должен быть 0 или больше)
             </span>
           </div>
         </div>
@@ -149,22 +149,22 @@
 
         <div class="modal-actions">
           <button type="button" class="btn-cancel" (click)="closeCreateModal()" [disabled]="loading">
-            Cancel
+            Отмена
           </button>
           <button type="submit" class="btn-submit" [disabled]="loading || venueForm.invalid">
-            <span *ngIf="!loading">Create Venue</span>
-            <span *ngIf="loading">Creating...</span>
+            <span *ngIf="!loading">Создать площадку</span>
+            <span *ngIf="loading">Создание...</span>
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Delete Modal -->
+  <!-- Модальное окно удаления -->
   <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
     <div class="modal-container delete-modal" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h2>Confirm Deletion</h2>
+        <h2>Подтвердите удаление</h2>
         <button class="close-btn" (click)="closeDeleteModal()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/>
@@ -181,23 +181,23 @@
             <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2"/>
           </svg>
         </div>
-        <p class="delete-message">Are you sure you want to delete this venue?</p>
-        <p class="delete-warning">This will also delete all related events, volunteers, and budgets. This action cannot be undone.</p>
+        <p class="delete-message">Вы уверены, что хотите удалить эту площадку?</p>
+        <p class="delete-warning">Это также удалит все связанные мероприятия, волонтеров и бюджеты. Это действие нельзя отменить.</p>
       </div>
 
       <div class="modal-actions">
         <button type="button" class="btn-cancel" (click)="closeDeleteModal()" [disabled]="loading">
-          No, Cancel
+          Нет, отменить
         </button>
         <button type="button" class="btn-delete" (click)="confirmDelete()" [disabled]="loading">
-          <span *ngIf="!loading">Yes, Delete</span>
-          <span *ngIf="loading">Deleting...</span>
+          <span *ngIf="!loading">Да, удалить</span>
+          <span *ngIf="loading">Удаление...</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Success Toast -->
+  <!-- Успешное уведомление -->
   <div class="toast success-toast" [class.show]="showSuccessToast">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-width="2"/>
@@ -206,7 +206,7 @@
     <span>{{ toastMessage }}</span>
   </div>
 
-  <!-- Error Toast -->
+  <!-- Ошибочное уведомление -->
   <div class="toast error-toast" [class.show]="showErrorToast">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <circle cx="12" cy="12" r="10" stroke-width="2"/>

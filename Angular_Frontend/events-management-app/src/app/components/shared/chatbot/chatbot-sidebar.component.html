@@ -1,26 +1,26 @@
 <!-- Chatbot Sidebar Overlay -->
-<div class="chatbot-overlay" 
+<div class="chatbot-overlay"
      [class.active]="isOpen"
      (click)="closeChatbot()"
      *ngIf="isOpen">
 </div>
 
 <!-- Chatbot Sidebar -->
-<div class="chatbot-sidebar" 
+<div class="chatbot-sidebar"
      [class.active]="isOpen">
-  
+
   <!-- Sidebar Header -->
   <div class="chatbot-header">
     <!-- Close Button - TOP LEFT as specified -->
-    <button class="close-button" 
+    <button class="close-button"
             (click)="closeChatbot()"
             title="Close Chat">
       ✕
     </button>
-    
+
     <!-- Centered Header Content -->
     <div class="header-content">
-      <h3>FestFlex Assistant</h3>
+      <h3>Помощник СНС УлГТУ</h3>
     </div>
   </div>
 
@@ -31,13 +31,13 @@
       <!-- Chat Messages -->
       <ng-container *ngFor="let message of messages; trackBy: trackByMessageId">
         <!-- Response Bubble - ALWAYS SHOW for all messages -->
-        <div class="message" 
+        <div class="message"
              [class.user-message]="message.sender === 'user'"
              [class.bot-message]="message.sender === 'bot'">
-          
+
           <!-- Message Content - ALWAYS VISIBLE -->
           <div class="message-bubble" [class.streaming]="message.isStreaming">
-            
+
             <!-- FOR BOT MESSAGES: Show typing indicator when streaming but no content yet -->
             <ng-container *ngIf="message.sender === 'bot' && message.isStreaming && !message.content">
               <div class="typing-indicator">
@@ -46,10 +46,10 @@
                 <span></span>
               </div>
             </ng-container>
-            
+
             <!-- FOR ALL MESSAGES: Always show content area (even if empty) -->
             <div class="message-content" [innerHTML]="formatMessage(message.content || '')"></div>
-                 
+
             <!-- Timestamp - only when not streaming and has content -->
             <div class="message-time" *ngIf="!message.isStreaming && message.content">{{ formatTime(message.timestamp) }}</div>
           </div>
@@ -77,7 +77,7 @@
           type="text"
           [value]="currentMessage"
           (input)="onMessageInput($event)"
-          placeholder="Type your message..."
+          placeholder="Введите ваше сообщение..."
           class="message-input"
           [disabled]="isLoading"
           #messageInput
