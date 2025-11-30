@@ -73,9 +73,21 @@
       </div>
 
       <!-- Кнопка входа -->
-      <button type="submit" class="submit-btn" [disabled]="adminLoading">
+      <button
+        type="submit"
+        class="admin-submit-btn"
+        [disabled]="adminLoading || adminForm.invalid"
+      >
         <span *ngIf="!adminLoading">Войти</span>
-        <span *ngIf="adminLoading">Вход...</span>
+        <span *ngIf="adminLoading" class="loading-spinner">
+            <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="32" stroke-dashoffset="32">
+                <animate attributeName="stroke-dasharray" dur="2s" values="0 32;16 16;0 32;0 32" repeatCount="indefinite"/>
+                <animate attributeName="stroke-dashoffset" dur="2s" values="0;-16;-32;-32" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+            Вход...
+          </span>
       </button>
 
       <!-- Сообщение об ошибке -->
