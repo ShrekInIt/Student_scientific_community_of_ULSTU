@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: scientific-community-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://dpg-d3j8njfdiees73fl5gvg-a.oregon-postgres.render.com:5432/datebase_for_student_scientific_community
+      - key: SPRING_DATASOURCE_USERNAME
+        value: datebase_for_student_scientific_community_user
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: mGBbGlp0KLGvHwNUYox4TTAdvlXx2vOL
+      - key: GEMINI_API_KEY
+        value: AIzaSyBOwcUr3ZFiPkVYhmc3TWSorn2k_vPU__c
+      - key: CLOUDINARY_URL
+        value: cloudinary://724566716965946:K02_WJMhAC0usIcMUOXTz0JdO-k@dgwu07lgw
+    plan: free
